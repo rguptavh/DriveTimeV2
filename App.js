@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import Constants from 'expo-constants';
 
 export default class App extends React.Component {
@@ -8,8 +8,10 @@ export default class App extends React.Component {
     password: ''
 };
   render() {
-    
-
+    const entireScreenHeight = Dimensions.get('window').height;
+    const rem = entireScreenHeight / 380;
+    const entireScreenWidth = Dimensions.get('window').width;
+    const wid = entireScreenWidth / 380;
     const onPress = () => {
       var uname = this.state.username;
         var pword = this.state.password;
@@ -45,23 +47,24 @@ export default class App extends React.Component {
   <View
   style = {{
     height: '40%',
-    width: '90%'
+    width: '95%',
+    marginTop: '5%'
     
   }}>
   <ImageBackground source={require('./assets/form.png')} style = {{
     width: '100%',
     height: '100%',
     alignItems: 'center',
-    marginTop: '5%'
+    
   }}resizeMode="contain">
     <TextInput
-        style={{marginTop: '29%', fontSize: '30%', width: '80%' }}
+        style={{marginTop: 37*rem, fontSize: 15*rem, width: 200*wid}}
         textAlign={'center'}
         onChangeText={(value) => this.setState({username: value})}
         value={this.state.username}
     />
     <TextInput
-        style={{marginTop: '21.5%', fontSize: '30%', width: '80%'}}
+        style={{marginTop: 36*rem, fontSize: 15*rem, width: 200*wid}}
         textAlign={'center'}
         onChangeText={(value) => this.setState({password: value})}
         value={this.state.password}
@@ -75,8 +78,8 @@ export default class App extends React.Component {
         onPress={onPress}
       >
         <Image source={require('./assets/logbut.png')} style = {{
-          height: '150%',
-          width: '150%',
+          height: '250%',
+          width: '250%',
 
   }}resizeMode="contain"></Image>
       </TouchableOpacity>
@@ -111,6 +114,7 @@ const styles = StyleSheet.create({
     height: '10%',
     width: '50%',
     alignItems: 'center',
+    marginTop: '10%'
   },
 
 });
