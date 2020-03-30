@@ -16,8 +16,8 @@ export default class App extends React.Component {
       var uname = this.state.username;
         var pword = this.state.password;
       const Http = new XMLHttpRequest();
-        const url='https://script.google.com/macros/s/AKfycbyxLUDyNjCQyPPPzaE7CnWMTBGgetrDwQeKkjfGPNdLieRvmgw/exec';
-        var data = "?username="+uname+"&password="+pword+"";
+        const url='https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
+        var data = "?username="+uname+"&password="+pword+"&action=login";
         Http.open("GET", String(url+data));
         Http.send();
         var ok;
@@ -31,6 +31,7 @@ export default class App extends React.Component {
             }
             else{
               alert("failed login");
+              console.log(ok);
             }
         }
         }
