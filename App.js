@@ -2,17 +2,17 @@ import * as React from 'react';
 import { Text, View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import Constants from 'expo-constants';
 
-
-
-// You can import from local file
-
-// or any pure javascript modules available in npm
 export default class App extends React.Component {
-  
+  state = {
+    username: '',
+    password: ''
+};
   render() {
+    
+
     const onPress = () => {
-      var uname = "adiraju";
-        var pword = "123";
+      var uname = this.state.username;
+        var pword = this.state.password;
       const Http = new XMLHttpRequest();
         const url='https://script.google.com/macros/s/AKfycbyxLUDyNjCQyPPPzaE7CnWMTBGgetrDwQeKkjfGPNdLieRvmgw/exec';
         var data = "?username="+uname+"&password="+pword+"";
@@ -22,15 +22,12 @@ export default class App extends React.Component {
 
         Http.onreadystatechange = (e) => {
             ok = Http.responseText;
-            console.log(String(ok));
-            console.log(Http.readyState);
         if (Http.readyState == 4)
         {
           if(String(ok) == "true"){
             alert("yay");
             }
             else{
-              console.log("falso");
               alert("failed login");
             }
         }
@@ -45,32 +42,45 @@ export default class App extends React.Component {
     height: '5%',
     width: '74%'
   }}resizeMode="contain"></Image>
-  
-  <Image source={require('./assets/form.png')} style = {{
-    marginTop: '7%',
-    width: '90%',
-    height: '35%'
-  }}resizeMode="contain"></Image>
+  <View
+  style = {{
+    height: '40%',
+    width: '90%'
+    
+  }}>
+  <ImageBackground source={require('./assets/form.png')} style = {{
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    marginTop: '5%'
+  }}resizeMode="contain">
+    <TextInput
+        style={{marginTop: '29%', fontSize: '30%', width: '80%' }}
+        textAlign={'center'}
+        onChangeText={(value) => this.setState({username: value})}
+        value={this.state.username}
+    />
+    <TextInput
+        style={{marginTop: '21.5%', fontSize: '30%', width: '80%'}}
+        textAlign={'center'}
+        onChangeText={(value) => this.setState({password: value})}
+        value={this.state.password}
+        secureTextEntry={true}
+    />
+  </ImageBackground>
+</View>
 
-<View
-      style={{
-        height: '10%',
-        width: '5%',
-        marginTop: '10%'
-      }}
-    >
   <TouchableOpacity
         style={styles.touchable}
         onPress={onPress}
       >
         <Image source={require('./assets/logbut.png')} style = {{
-          height: '180%',
-          width: '5000%'
+          height: '150%',
+          width: '150%',
 
   }}resizeMode="contain"></Image>
       </TouchableOpacity>
   
-      </View>
       </ImageBackground>
       </View>
       
@@ -98,8 +108,9 @@ const styles = StyleSheet.create({
     width: '80%'
   },
   touchable: {
+    height: '10%',
+    width: '50%',
     alignItems: 'center',
-    justifyContent: 'center',
-    
   },
+
 });
