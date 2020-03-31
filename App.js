@@ -45,45 +45,49 @@ export default class App extends React.Component {
     height: '5%',
     width: '74%'
   }}resizeMode="contain"></Image>
-  <View
-  style = {{
-    height: '40%',
-    width: '95%',
-    marginTop: '5%'
-    
-  }}>
   <ImageBackground source={require('./assets/form.png')} style = {{
     width: '100%',
-    height: '100%',
+    height: '65%',
     alignItems: 'center',
+    marginTop: '5%',
     
-  }}resizeMode="contain">
+    
+    
+  }}resizeMode="default">
+   
     <TextInput
-        style={{marginTop: 37*rem, fontSize: 15*rem, width: 200*wid}}
+        style={{marginTop: 40*rem, fontSize: 12*rem, width: 200*wid}}
         textAlign={'center'}
         onChangeText={(value) => this.setState({username: value})}
         value={this.state.username}
     />
     <TextInput
-        style={{marginTop: 36*rem, fontSize: 15*rem, width: 200*wid}}
+        style={{marginTop: 47*rem, fontSize: 12*rem, width: 200*wid}}
         textAlign={'center'}
         onChangeText={(value) => this.setState({password: value})}
         value={this.state.password}
         secureTextEntry={true}
     />
-  </ImageBackground>
-</View>
+    <View style = {{
+      height: '30%',
+      width: '70%',
+      marginTop: '25%',
 
-  <TouchableOpacity
-        style={styles.touchable}
+    }}>
+    <TouchableOpacity
+        style={{    
+        }}
         onPress={onPress}
       >
         <Image source={require('./assets/logbut.png')} style = {{
-          height: '250%',
-          width: '250%',
+          height: '100%',
+          width: '100%',
 
-  }}resizeMode="contain"></Image>
+  }}resizeMode="cover"></Image>
       </TouchableOpacity>
+      </View>
+  </ImageBackground>
+  
   
       </ImageBackground>
       </View>
@@ -110,12 +114,6 @@ const styles = StyleSheet.create({
     marginTop: '15%',
     height: '16%',
     width: '80%'
-  },
-  touchable: {
-    height: '10%',
-    width: '50%',
-    alignItems: 'center',
-    marginTop: '10%'
   },
 
 });
