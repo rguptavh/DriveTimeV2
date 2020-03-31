@@ -56,7 +56,7 @@ export default class App extends React.Component {
   }}resizeMode="default">
    
     <TextInput
-        style={{marginTop: 40*rem, fontSize: 12*rem, width: 200*wid}}
+        style={{marginTop: 41*rem, fontSize: 12*rem, width: 200*wid}}
         textAlign={'center'}
         onChangeText={(value) => this.setState({username: value})}
         value={this.state.username}
