@@ -10,7 +10,7 @@ export default class Login extends React.Component {
     username: '',
     password: ''
 };
-static navigationOptions = { header: null };
+static navigationOptions = { header: null, gesturesEnabled: false };
   render() {
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;

@@ -10,7 +10,7 @@ import mainscr from './components/Mainpage';
 
 
 export default class App extends React.Component {
-  static navigationOptions = { header: null, headerMode: 'screen' }; 
+  static navigationOptions = { header: null, headerMode: 'screen', gestureEnabled: false }; 
   render() {
     return <AppContainer />;
   }
