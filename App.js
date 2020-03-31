@@ -69,8 +69,8 @@ export default class App extends React.Component {
         secureTextEntry={true}
     />
     <View style = {{
-      height: '30%',
-      width: '70%',
+      height: '26%',
+      width: '60%',
       marginTop: '25%',
 
     }}>
