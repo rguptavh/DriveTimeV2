@@ -8,7 +8,7 @@ export default class Mainpage extends React.Component {
     username: '',
     password: ''
 };
-static navigationOptions = { header: null, gesturesEnabled: false };
+static navigationOptions = { header: null, gestureEnabled: false };
   render() {
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
