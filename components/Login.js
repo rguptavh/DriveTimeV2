@@ -21,7 +21,7 @@ static navigationOptions = { header: null, gestureEnabled: false };
       ree = rem;
     }
     else{
-      ree = 4.1*wid/rem;
+      ree = 1.75*wid;
     }
     console.log(entireScreenWidth);
     const onPress = () => {
@@ -82,7 +82,7 @@ static navigationOptions = { header: null, gestureEnabled: false };
       
     }}>
     <TextInput
-        style={{ fontSize: 12*rem, width: 200*wid, marginTop: ree*35}}
+        style={{ fontSize: 12*rem, width: 200*wid, marginTop: ree*37}}
         textAlign={'center'}
         onChangeText={(value) => this.setState({password: value})}
         value={this.state.password}
