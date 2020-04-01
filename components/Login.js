@@ -62,7 +62,6 @@ static navigationOptions = { header: null, gestureEnabled: false };
     alignItems: 'center',
     flex:4,
     width: '100%',
-    backgroundColor: 'green',
 
   }}resizeMode="contain">
    <View style = {{
@@ -94,7 +93,6 @@ static navigationOptions = { header: null, gestureEnabled: false };
   <View style = {{
       width: '73%',
       flex:2,
-      backgroundColor: 'green',
     }}>
     <TouchableOpacity
         style={{    
