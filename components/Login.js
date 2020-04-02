@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
-import Constants from 'expo-constants';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 
 
