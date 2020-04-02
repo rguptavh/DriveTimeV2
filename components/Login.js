@@ -10,7 +10,8 @@ export default class Login extends React.Component {
     username: '',
     password: ''
 };
-static navigationOptions = { header: null, gestureEnabled: false };
+
+static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
@@ -23,7 +24,6 @@ static navigationOptions = { header: null, gestureEnabled: false };
     else{
       ree = 1.75*wid;
     }
-    console.log(entireScreenWidth);
     const onPress = () => {
       var uname = this.state.username;
         var pword = this.state.password;
@@ -39,12 +39,10 @@ static navigationOptions = { header: null, gestureEnabled: false };
         if (Http.readyState == 4)
         {
           if(String(ok) == "true"){
-            alert("yay");
             this.props.navigation.navigate('Main')
             }
             else{
-              alert("failed login");
-              console.log(ok);
+              alert("Failed login");
             }
         }
         }
@@ -93,11 +91,12 @@ static navigationOptions = { header: null, gestureEnabled: false };
   <View style = {{
       width: '73%',
       flex:2,
+      justifyContent:'center'
     }}>
     <TouchableOpacity
         style={{    
-        height: '100%',
-        width: '100%',}}
+        height: entireScreenWidth*0.73*276/1096,
+        width: '100%'}}
         onPress={onPress}
       >
         <Image source={require('../assets/logbut.png')} style = {{

@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import {createAppContainer } from 'react-navigation';
-
+import * as Font from 'expo-font';
 
 import log from './components/Login';
 import mainscr from './components/Mainpage';
@@ -11,6 +11,19 @@ import mainscr from './components/Mainpage';
 
 export default class App extends React.Component {
   static navigationOptions = { headerShown: 'false', headerMode: 'screen', gestureEnabled: false }; 
+  state = {
+    assetsLoaded: false,
+};
+
+async componentDidMount() {
+    await Font.loadAsync({
+      'Nova': require('./assets/fonts/NovaMono.ttf'),
+    });
+
+    this.setState({ assetsLoaded: true });
+}
+
+
   render() {
     return <AppContainer />;
   }
@@ -24,7 +37,8 @@ const AppNavigator = createStackNavigator({
     screen: mainscr
   }
 },{
-  initialRouteName: "Login"
+  initialRouteName: "Login",
+  headerMode: 'none'
 });
 
 const AppContainer = createAppContainer(AppNavigator);
