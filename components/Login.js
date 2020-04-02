@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
+import {View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import Constants from 'expo-constants';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
@@ -49,7 +49,9 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     }
     return (
       <View style={styles.container}>
+        
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
+
           <Image source={require('../assets/vh.png')} style = {styles.imagefront} resizeMode="contain"></Image>
           <Image source={require('../assets/dtime.png')} style = {{
     height: '5%',
@@ -111,16 +113,17 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   
       </ImageBackground>
       </View>
-      
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
     justifyContent: 'center',
     alignItems: 'center',
+    left: 0, top: 0, position: 'absolute'
 
   },
   image: {

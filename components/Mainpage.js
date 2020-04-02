@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, ActivityIndicator , Dimensions} from 'react-native';
+import { Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity, Dimensions} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 
 const entireScreenHeight = Dimensions.get('window').height;
@@ -138,7 +138,6 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       width: '100%',
       flex:2,
       flexDirection: 'row',
-      alignItems: ''
     }}>
       <TouchableOpacity
         style={{    
