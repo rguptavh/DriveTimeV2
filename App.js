@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import {createAppContainer } from 'react-navigation';
 import * as Font from 'expo-font';
-
 import log from './components/Login';
 import mainscr from './components/Mainpage';
 
