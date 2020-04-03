@@ -6,7 +6,8 @@ import {View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, A
 export default class Login extends React.Component {
   state = {
     username: '',
-    password: ''
+    password: '',
+    loading: false
 };
 
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
@@ -25,6 +26,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     const onPress = () => {
       var uname = this.state.username;
         var pword = this.state.password;
+        this.setState({loading: true});
       const Http = new XMLHttpRequest();
         const url='https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
         var data = "?username="+uname+"&password="+pword+"&action=login";
@@ -42,6 +44,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
             else{
               alert("Failed login");
             }
+            this.setState({loading: false});
         }
         }
     }
@@ -96,8 +99,10 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     <TouchableOpacity
         style={{    
         height: entireScreenWidth*0.73*276/1096,
-        width: '100%'}}
+        width: '100%',}}
         onPress={onPress}
+        disabled={this.state.loading}
+        
       >
         <Image source={require('../assets/logbut.png')} style = {{
           height: '100%',
