@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
-
+import DatePicker from 'react-native-datepicker'
 
 
 export default class Login extends React.Component {
   state = {
-    username: '',
-    password: '',
+    date: '',
+    time: '',
     loading: false
 };
 
@@ -17,7 +17,8 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     const entireScreenWidth = Dimensions.get('window').width;
     const wid = entireScreenWidth / 380;
     var ree;
-    if (entireScreenWidth>=0.92*entireScreenHeight*4/9*1524/1200){
+    console.log(global.uname);
+    if (entireScreenWidth>=entireScreenHeight*3/4*1360/2360){
       ree = rem;
     }
     else{
@@ -39,7 +40,6 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         {
           if(String(ok) == "true"){
             this.props.navigation.navigate('Main')
-            global.uname = this.state.username;
             }
             else{
               alert("Failed login");
@@ -52,48 +52,73 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       <View style={styles.container}>
         
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
-
-          <Image source={require('../assets/vh.png')} style = {styles.imagefront} resizeMode="contain"></Image>
-          <Image source={require('../assets/dtime.png')} style = {{
-    height: '5%',
-    width: '74%',
+<View style = {{flex:1, width: '90%', alignItems: 'center'}}>
+          <Image source={require('../assets/drivelog.png')} style = {{
+    height: '100%',
+    width: '84%',
+    marginTop:'10%',
     flex: 1,
-  }}resizeMode="contain"></Image>
-  <ImageBackground source={require('../assets/form.png')} style = {{
+  }}resizeMode="contain"></Image></View>
+  <ImageBackground source={require('../assets/bigform.png')} style = {{
     alignItems: 'center',
-    flex:4,
+    flex:6,
     width: '100%',
 
   }}resizeMode="contain">
-   <View style = {{
-      width: 200*wid,
-      flex:1,
-      justifyContent: 'flex-end'
-    }}>
-    <TextInput
-        style={{ fontSize: 12*rem, width: 200*wid, marginBottom: 24*ree }}
-        textAlign={'center'}
-        onChangeText={(value) => this.setState({username: value})}
-        value={this.state.username}
-    /></View>
-    <View style = {{
-      width: 200*wid,
-      flex:1,
-      
-    }}>
-    <TextInput
-        style={{ fontSize: 12*rem, width: 200*wid, marginTop: ree*37}}
-        textAlign={'center'}
-        onChangeText={(value) => this.setState({password: value})}
-        value={this.state.password}
-        secureTextEntry={true}
-    />
+ 
+ <DatePicker
+        style={{width: 250*wid, marginTop: 25*ree}}
+        date={this.state.date}
+        mode="date"
+        
+        format="MM-DD-YYYY"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        showIcon = {false}
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0
+          },
+          dateInput:{borderWidth: 0},
+          dateText: {
+            fontSize: 12*rem,
+        }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(date) => {this.setState({date: date})}}
+      />
+     <DatePicker
+        style={{width: 250*wid, marginTop: 23*ree}}
+        date={this.state.time}
+        mode="time"
+        format="HH:mm A"
+        confirmBtnText="Confirm"
+        cancelBtnText="Cancel"
+        showIcon = {false}
+        showTime={{ use12Hours: true }}
+        customStyles={{
+          dateIcon: {
+            position: 'absolute',
+            left: 0,
+            top: 4,
+            marginLeft: 0
+          },
+          dateInput:{borderWidth: 0},
+          dateText: {
+            fontSize: 12*rem,
+          }
+          // ... You can check the source to find the other keys.
+        }}
+        onDateChange={(date) => {this.setState({time: date})}}
+      />
     
- </View>
   </ImageBackground>
   <View style = {{
       width: '73%',
-      flex:2,
+      flex:1,
       justifyContent:'center'
     }}>
     <TouchableOpacity
@@ -104,7 +129,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         disabled={this.state.loading}
         
       >
-        <Image source={require('../assets/logbut.png')} style = {{
+        <Image source={require('../assets/savebut.png')} style = {{
           height: '100%',
           width: '100%',
           flex:1

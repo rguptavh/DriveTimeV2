@@ -6,6 +6,7 @@ import {createAppContainer } from 'react-navigation';
 import * as Font from 'expo-font';
 import log from './components/Login';
 import mainscr from './components/Mainpage';
+import logdrive from './components/Logdrive';
 
 
 export default class App extends React.Component {
@@ -34,6 +35,9 @@ const AppNavigator = createStackNavigator({
   },
   Main: {
     screen: mainscr
+  },
+  Logdrive: {
+    screen: logdrive
   }
 },{
   initialRouteName: "Login",

@@ -24,7 +24,10 @@ export default class Mainpage extends React.Component {
   componentWillUnmount() {
     clearInterval(this.state.timer);
   }
- 
+  logDrive = () => {
+    this.props.navigation.navigate('Logdrive')
+
+  }
   onButtonStart = () => {
  if (!this.state.startDisable){
     let timer = setInterval(() => {
@@ -106,11 +109,11 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       flex:2,
       flexDirection: 'row',
       alignItems: 'center'
-    }}>
+    }} >
       <TouchableOpacity
         style={{    
         height: entireScreenWidth/2*0.9,
-        flex:1}}
+        flex:1}} onPress = {this.logDrive}
       >
         <Image source={require('../assets/logdrive.png')} style = {{
           height: '100%',
@@ -124,6 +127,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         style={{    
         height: entireScreenWidth/2*0.9,
         flex:1}}
+   
       >
         <Image source={require('../assets/pdrive.png')} style = {{
           height: '100%',
