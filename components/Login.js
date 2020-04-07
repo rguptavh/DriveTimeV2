@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
+import {View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
 
 
 
@@ -49,6 +49,8 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         }
     }
     return (
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
+
       <View style={styles.container}>
         
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
@@ -71,10 +73,11 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       justifyContent: 'flex-end'
     }}>
     <TextInput
-        style={{ fontSize: 12*rem, width: 200*wid, marginBottom: 24*ree }}
+        style={{ fontSize: 12*rem, width: 200*wid, marginBottom: 24*ree, autoCapitalize: 'none', autoCompleteType: 'off' }}
         textAlign={'center'}
         onChangeText={(value) => this.setState({username: value})}
         value={this.state.username}
+        
     /></View>
     <View style = {{
       width: 200*wid,
@@ -116,6 +119,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   
       </ImageBackground>
       </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

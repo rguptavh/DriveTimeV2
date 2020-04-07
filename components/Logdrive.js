@@ -1,14 +1,17 @@
 import * as React from 'react';
-import {View, StyleSheet, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
+import {View, StyleSheet,TouchableWithoutFeedback, Keyboard,TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import DatePicker from 'react-native-datepicker'
+import moment from 'moment'; 
 
 
 export default class Login extends React.Component {
   state = {
     date: '',
     time: '',
+    minutes: global.minutes,
     loading: false
 };
+
 
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
@@ -18,7 +21,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     const wid = entireScreenWidth / 380;
     var ree;
     console.log(global.uname);
-    if (entireScreenWidth>=entireScreenHeight*3/4*1360/2360){
+    if (entireScreenWidth>=entireScreenHeight*3/4*1360/2360 *0.9){
       ree = rem;
     }
     else{
@@ -49,7 +52,8 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         }
     }
     return (
-      <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
+        <View style={styles.container}>
         
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
 <View style = {{flex:1, width: '90%', alignItems: 'center'}}>
@@ -62,26 +66,21 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   <ImageBackground source={require('../assets/bigform.png')} style = {{
     alignItems: 'center',
     flex:6,
-    width: '100%',
-
+    width: '100%'
   }}resizeMode="contain">
- 
+  <View style = {{flex:1.4, width: '100%'}}></View>
+ <View style = {{flex:1, width: '100%', alignItems: 'center', justifyContent: 'center'}}>
  <DatePicker
-        style={{width: 250*wid, marginTop: 25*ree}}
+        style={{width: 250*wid, marginTop: 10*ree}}
         date={this.state.date}
         mode="date"
-        
+        maxDate = {moment().format("MM-DD-YYYY")}
         format="MM-DD-YYYY"
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         showIcon = {false}
         customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0
-          },
+
           dateInput:{borderWidth: 0},
           dateText: {
             fontSize: 12*rem,
@@ -90,30 +89,39 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         }}
         onDateChange={(date) => {this.setState({date: date})}}
       />
+      </View>
+      <View style = {{flex:1, width: '100%', alignItems: 'center', justifyContent: 'center'}}>
      <DatePicker
-        style={{width: 250*wid, marginTop: 23*ree}}
+        style={{width: 250*wid, marginTop: 6*ree}}
         date={this.state.time}
         mode="time"
-        format="HH:mm A"
+        format={'h:mm A'}
         confirmBtnText="Confirm"
         cancelBtnText="Cancel"
         showIcon = {false}
         showTime={{ use12Hours: true }}
         customStyles={{
-          dateIcon: {
-            position: 'absolute',
-            left: 0,
-            top: 4,
-            marginLeft: 0
-          },
+
           dateInput:{borderWidth: 0},
           dateText: {
             fontSize: 12*rem,
           }
-          // ... You can check the source to find the other keys.
         }}
         onDateChange={(date) => {this.setState({time: date})}}
-      />
+      /></View>
+      <View style = {{flex:1, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+      <TextInput
+        style={{ fontSize: 12*rem, width: 200*wid, marginTop: 0*ree, }}
+        textAlign={'center'}
+        onChangeText={(value) => this.setState({minutes: value})}
+        keyboardType= 'number-pad'
+        value={this.state.minutes}
+        
+    />
+      </View>
+      <View style = {{flex:1, width: '100%'}}></View>
+      <View style = {{flex:1, width: '100%'}}></View>
+
     
   </ImageBackground>
   <View style = {{
@@ -141,6 +149,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   
       </ImageBackground>
       </View>
+      </TouchableWithoutFeedback>
     );
   }
 }

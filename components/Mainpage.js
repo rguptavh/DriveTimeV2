@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity, Dimensions} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 const entireScreenHeight = Dimensions.get('window').height;
 const rem = entireScreenHeight / 380;
 const entireScreenWidth = Dimensions.get('window').width;
@@ -22,6 +22,7 @@ export default class Mainpage extends React.Component {
   }
 
   componentWillUnmount() {
+    deactivateKeepAwake();
     clearInterval(this.state.timer);
   }
   logDrive = () => {
@@ -30,6 +31,7 @@ export default class Mainpage extends React.Component {
   }
   onButtonStart = () => {
  if (!this.state.startDisable){
+  activateKeepAwake();
     let timer = setInterval(() => {
  
       var num = (Number(this.state.seconds_Counter) + 1).toString(),
@@ -57,7 +59,9 @@ export default class Mainpage extends React.Component {
   }
 
   else{
+    deactivateKeepAwake();
     clearInterval(this.state.timer);
+    global.minutes = parseInt(hours_Counter)*60+parseInt(minutes.counter)+Math.round(parstInt(seconds_Counter)/30);
     this.setState({startDisable : false})
     this.setState({
       timer: null,
@@ -71,6 +75,7 @@ export default class Mainpage extends React.Component {
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
 
   render() {
+    global.minutes = '';
     const Handbook = () => {
       WebBrowser.openBrowserAsync('https://www.cyberdriveillinois.com/publications/pdf_publications/dsd_a112.pdf');
       }
