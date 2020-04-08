@@ -1,13 +1,15 @@
 // App.js
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import {createAppContainer } from 'react-navigation';
 import * as Font from 'expo-font';
 import log from './components/Login';
 import mainscr from './components/Mainpage';
 import logdrive from './components/Logdrive';
+import { AppLoading } from 'expo';
 
+let logged = false;
 
 export default class App extends React.Component {
   static navigationOptions = { headerShown: 'false', headerMode: 'screen', gestureEnabled: false }; 
@@ -21,11 +23,28 @@ async componentDidMount() {
     });
 
     this.setState({ assetsLoaded: true });
+    
+    try {
+      const name = await AsyncStorage.getItem('username')
+      console.log(name);
+
+      if (name !== null) {
+        logged = true;
+        global.uname = name;
+      }
+    } catch (e) {
+      console.log('Failed to load .')
+    }
 }
 
 
   render() {
+    if (this.state.assetsLoaded){
     return <AppContainer />;
+    }
+    else{
+      return <AppLoading></AppLoading>;
+    }
   }
 }
 
@@ -40,7 +59,7 @@ const AppNavigator = createStackNavigator({
     screen: logdrive
   }
 },{
-  initialRouteName: "Login",
+  initialRouteName: logged ? "Login" : 'Main',
   headerMode: 'none'
 });
 

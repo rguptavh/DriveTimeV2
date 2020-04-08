@@ -12,8 +12,8 @@ export default class Mainpage extends React.Component {
  
     this.state = {
       timer: null,
-      minutes_Counter: '00',
-      seconds_Counter: '00',
+      minutes_Counter: '59',
+      seconds_Counter: '30',
       hours_Counter:'00',
       startDisable: false,
       assetsLoaded: false,
@@ -30,7 +30,7 @@ export default class Mainpage extends React.Component {
 
   }
   onButtonStart = () => {
- if (!this.state.startDisable){
+ if (!(this.state.startDisable)){
   activateKeepAwake();
     let timer = setInterval(() => {
  
@@ -61,7 +61,10 @@ export default class Mainpage extends React.Component {
   else{
     deactivateKeepAwake();
     clearInterval(this.state.timer);
-    global.minutes = parseInt(hours_Counter)*60+parseInt(minutes.counter)+Math.round(parstInt(seconds_Counter)/30);
+    global.minutes = String(parseInt(this.state.hours_Counter)*60+parseInt(this.state.minutes_Counter)+Math.round(parseInt(this.state.seconds_Counter)/30));
+    console.log(global.minutes);
+    this.props.navigation.navigate('Logdrive')
+
     this.setState({startDisable : false})
     this.setState({
       timer: null,
@@ -69,13 +72,14 @@ export default class Mainpage extends React.Component {
       seconds_Counter: '00',
       hours_Counter:'00'
     });
+
   }
+ 
 }
 
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
 
   render() {
-    global.minutes = '';
     const Handbook = () => {
       WebBrowser.openBrowserAsync('https://www.cyberdriveillinois.com/publications/pdf_publications/dsd_a112.pdf');
       }

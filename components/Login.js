@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
+import {View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage} from 'react-native';
 
 
 
@@ -40,6 +40,8 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
           if(String(ok) == "true"){
             this.props.navigation.navigate('Main')
             global.uname = this.state.username;
+            AsyncStorage.setItem('username', this.state.username);
+
             }
             else{
               alert("Failed login");
@@ -73,8 +75,10 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       justifyContent: 'flex-end'
     }}>
     <TextInput
-        style={{ fontSize: 12*rem, width: 200*wid, marginBottom: 24*ree, autoCapitalize: 'none', autoCompleteType: 'off' }}
+        style={{ fontSize: 12*rem, width: 200*wid, marginBottom: 24*ree,  }}
         textAlign={'center'}
+        autoCapitalize = 'none'
+        autoCompleteType= 'off'
         onChangeText={(value) => this.setState({username: value})}
         value={this.state.username}
         

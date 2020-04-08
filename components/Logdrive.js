@@ -1,32 +1,55 @@
 import * as React from 'react';
-import {View, StyleSheet,TouchableWithoutFeedback, Keyboard,TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
+import {View, StyleSheet,TouchableWithoutFeedback, Picker, Keyboard,TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'; 
+import RNPickerSelect from 'react-native-picker-select';
+
 
 
 export default class Login extends React.Component {
+
   state = {
     date: '',
     time: '',
     minutes: global.minutes,
+    description: '',
     loading: false
 };
 
 
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
+    const placeholder = {
+      label: 'Select a road type...',
+      value: null,
+      color: '#9EA0A4',
+    };
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
     const entireScreenWidth = Dimensions.get('window').width;
     const wid = entireScreenWidth / 380;
     var ree;
     console.log(global.uname);
+    console.log(global.minutes);
     if (entireScreenWidth>=entireScreenHeight*3/4*1360/2360 *0.9){
       ree = rem;
     }
     else{
       ree = 1.75*wid;
     }
+    const pickerStyle = {
+      inputIOS: {
+        color: 'black',
+        alignSelf: 'center',
+        fontSize: 10*ree
+      },
+      inputAndroid: {
+        color: 'black',
+        alignSelf: 'center',
+        fontSize: 10*ree
+      },
+      
+    };
     const onPress = () => {
       var uname = this.state.username;
         var pword = this.state.password;
@@ -68,7 +91,17 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     flex:6,
     width: '100%'
   }}resizeMode="contain">
-  <View style = {{flex:1.4, width: '100%'}}></View>
+  <View style = {{flex:1.4, width: '100%',alignItems: 'center', justifyContent: 'center'}}>
+  <TextInput
+        style={{ fontSize: 8*rem, width: 200*wid, marginTop: 20*ree, }}
+        textAlign={'center'}
+        onChangeText={(value) => this.setState({description: value})}
+        value={this.state.description}
+        multiline={true}
+        maxHeight = {8*rem*3.1}
+        
+    />
+  </View>
  <View style = {{flex:1, width: '100%', alignItems: 'center', justifyContent: 'center'}}>
  <DatePicker
         style={{width: 250*wid, marginTop: 10*ree}}
@@ -116,11 +149,40 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         onChangeText={(value) => this.setState({minutes: value})}
         keyboardType= 'number-pad'
         value={this.state.minutes}
+        maxLength={3}
         
     />
       </View>
-      <View style = {{flex:1, width: '100%'}}></View>
-      <View style = {{flex:1, width: '100%'}}></View>
+      <View style = {{flex:1, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
+      <RNPickerSelect
+      style={pickerStyle}
+      placeholderTextColor="red" 
+
+      placeholder= {placeholder}
+            onValueChange={(value) => console.log(value)}
+            items={[
+                { label: 'Football', value: 'football' },
+                { label: 'Baseball', value: 'baseball' },
+                { label: 'Hockey', value: 'hockey' },
+            ]}
+            
+        />
+      </View>
+      <View style = {{flex:1, width: '100%',justifyContent: 'center', alignItems: 'center'}}>
+      <RNPickerSelect
+      style={pickerStyle}
+      placeholderTextColor="red" 
+
+      placeholder= {placeholder}
+            onValueChange={(value) => console.log(value)}
+            items={[
+                { label: 'Football', value: 'football' },
+                { label: 'Baseball', value: 'baseball' },
+                { label: 'Hockey', value: 'hockey' },
+            ]}
+            
+        />
+      </View>
 
     
   </ImageBackground>
