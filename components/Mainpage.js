@@ -12,8 +12,8 @@ export default class Mainpage extends React.Component {
  
     this.state = {
       timer: null,
-      minutes_Counter: '59',
-      seconds_Counter: '30',
+      minutes_Counter: '00',
+      seconds_Counter: '00',
       hours_Counter:'00',
       startDisable: false,
       assetsLoaded: false,

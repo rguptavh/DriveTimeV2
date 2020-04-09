@@ -3,16 +3,18 @@ import {View, StyleSheet,TouchableWithoutFeedback, Picker, Keyboard,TextInput, I
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment'; 
 import RNPickerSelect from 'react-native-picker-select';
-
+import { getSunrise, getSunset } from 'sunrise-sunset-js';
 
 
 export default class Login extends React.Component {
 
   state = {
-    date: '',
-    time: '',
+    date: moment().format("MM-DD-YYYY"),
+    time: moment().format('h:mm A'),
     minutes: global.minutes,
     description: '',
+    road: '',
+    weather: '',
     loading: false
 };
 
@@ -24,6 +26,11 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       value: null,
       color: '#9EA0A4',
     };
+    const placeholder2 = {
+      label: 'Select weather...',
+      value: null,
+      color: '#9EA0A4',
+    };
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
     const entireScreenWidth = Dimensions.get('window').width;
@@ -31,6 +38,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     var ree;
     console.log(global.uname);
     console.log(global.minutes);
+    
     if (entireScreenWidth>=entireScreenHeight*3/4*1360/2360 *0.9){
       ree = rem;
     }
@@ -41,22 +49,38 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       inputIOS: {
         color: 'black',
         alignSelf: 'center',
-        fontSize: 10*ree
+        fontSize: 12*ree,
+        paddingBottom: 3*ree
       },
       inputAndroid: {
         color: 'black',
         alignSelf: 'center',
-        fontSize: 10*ree
+        fontSize: 12*ree,
+        paddingBottom: 3*ree
       },
       
     };
     const onPress = () => {
-      var uname = this.state.username;
-        var pword = this.state.password;
+        var uname = String(global.username);
+        var date = String(this.state.date);
+        var time = String(this.state.time);
+        var minutes = String(this.state.minutes);
+        var description = String(this.state.description).trim().replace(/\n/g, " ");
+        var road = this.state.road;
+        var sunset = moment(String(moment(getSunset(42.2204892, -87.9803604, new Date(String(moment(this.state.date,"MM-DD-YYYY").format('YYYY-MM-DD'))))).add(30,'minutes').format('h:mm A')),'h:mm A');
+        var time = moment(String(this.state.time),'h:mm A');
+        var night = sunset.isBefore(time) ? 'Night' : 'Day';
+        var weather = this.state.weather;
+        console.log(night);
+        var pword = '';
+        if (uname==''){
+          alert("Please log in again");
+        }
+        else if (date!='' && time !='' && minutes !='' && road != null && weather !=null && description !=''){
         this.setState({loading: true});
       const Http = new XMLHttpRequest();
         const url='https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
-        var data = "?username="+uname+"&password="+pword+"&action=login";
+        var data = "?username="+uname+"&password="+pword+"&action=addhours";
         Http.open("GET", String(url+data));
         Http.send();
         var ok;
@@ -68,12 +92,16 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
             this.props.navigation.navigate('Main')
             }
             else{
-              alert("Failed login");
+              alert("Failed to save");
             }
             this.setState({loading: false});
         }
         }
     }
+    else{
+      alert("Please fill all fields");
+    }
+  }
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
         <View style={styles.container}>
@@ -159,11 +187,14 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       placeholderTextColor="red" 
 
       placeholder= {placeholder}
-            onValueChange={(value) => console.log(value)}
+            onValueChange={(value) => this.setState({road: value})}
             items={[
-                { label: 'Football', value: 'football' },
-                { label: 'Baseball', value: 'baseball' },
-                { label: 'Hockey', value: 'hockey' },
+                { label: 'Local', value: 'Local' },
+                { label: 'Highway', value: 'Highway' },
+                { label: 'Tollway', value: 'Tollway' },
+                { label: 'Urban', value: 'Urban' },
+                { label: 'Rural', value: 'Rural' },
+                { label: 'Parking Lot', value: 'Parking Lot' },
             ]}
             
         />
@@ -173,12 +204,16 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       style={pickerStyle}
       placeholderTextColor="red" 
 
-      placeholder= {placeholder}
-            onValueChange={(value) => console.log(value)}
+      placeholder= {placeholder2}
+            onValueChange={(value) => this.setState({weather: value})}
             items={[
-                { label: 'Football', value: 'football' },
-                { label: 'Baseball', value: 'baseball' },
-                { label: 'Hockey', value: 'hockey' },
+                { label: 'Sunny', value: 'Sunny' },
+                { label: 'Rain', value: 'Rain' },
+                { label: 'Snow', value: 'Snow' },
+                { label: 'Fog', value: 'Fog' },
+                { label: 'Hail', value: 'Hail' },
+                { label: 'Sleet', value: 'Sleet' },
+                { label: 'Freezing Rain', value: 'Freezing Rain' },
             ]}
             
         />
