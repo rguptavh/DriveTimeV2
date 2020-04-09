@@ -64,23 +64,30 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         var uname = String(global.username);
         var date = String(this.state.date);
         var time = String(this.state.time);
-        var minutes = String(this.state.minutes);
+        var minutes = parseInt(String(this.state.minutes));
         var description = String(this.state.description).trim().replace(/\n/g, " ");
         var road = this.state.road;
         var sunset = moment(String(moment(getSunset(42.2204892, -87.9803604, new Date(String(moment(this.state.date,"MM-DD-YYYY").format('YYYY-MM-DD'))))).add(30,'minutes').format('h:mm A')),'h:mm A');
-        var time = moment(String(this.state.time),'h:mm A');
-        var night = sunset.isBefore(time) ? 'Night' : 'Day';
+        var sunrise = moment(String(moment(getSunrise(42.2204892, -87.9803604, new Date(String(moment(this.state.date,"MM-DD-YYYY").format('YYYY-MM-DD'))))).add(30,'minutes').format('h:mm A')),'h:mm A');
+        var comparetime = moment(String(this.state.time),'h:mm A');
+        var night = sunset.isBefore(comparetime) || comparetime.isBefore(sunrise) ? 'Night' : 'Day';
         var weather = this.state.weather;
-        console.log(night);
         var pword = '';
         if (uname==''){
           alert("Please log in again");
         }
-        else if (date!='' && time !='' && minutes !='' && road != null && weather !=null && description !=''){
-        this.setState({loading: true});
+        
+        else if (date!='' && time !='' && !isNaN(minutes) && road != null && weather !=null && description !=''){
+         
+          if (minutes == '0'){
+            alert("Can't log 0 minutes")
+          }
+          else{
+          this.setState({loading: true});
       const Http = new XMLHttpRequest();
         const url='https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
-        var data = "?username="+uname+"&password="+pword+"&action=addhours";
+        var data = "?username="+global.uname+"&date="+date+"&time="+time+"&description="+description+"&tod="+night+"&time="+time+"&minutes="+minutes+"&road="+road+"&weather="+weather+"&action=addhours";
+        console.log(data);
         Http.open("GET", String(url+data));
         Http.send();
         var ok;
@@ -88,16 +95,19 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
             ok = Http.responseText;
         if (Http.readyState == 4)
         {
-          if(String(ok) == "true"){
+          if(String(ok) == "Success"){
+            alert("Saved!")
+            global.minutes = '';
             this.props.navigation.navigate('Main')
             }
             else{
-              alert("Failed to save");
+              alert("Failed to save, please try again later");
             }
             this.setState({loading: false});
         }
         }
     }
+  }
     else{
       alert("Please fill all fields");
     }

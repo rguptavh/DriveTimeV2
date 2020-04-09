@@ -27,7 +27,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       var uname = this.state.username;
         var pword = this.state.password;
         this.setState({loading: true});
-      const Http = new XMLHttpRequest();
+        const Http = new XMLHttpRequest();
         const url='https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
         var data = "?username="+uname+"&password="+pword+"&action=login";
         Http.open("GET", String(url+data));

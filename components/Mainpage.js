@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity, Dimensions} from 'react-native';
+import { Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity, Dimensions, AsyncStorage} from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 const entireScreenHeight = Dimensions.get('window').height;
@@ -25,10 +25,22 @@ export default class Mainpage extends React.Component {
     deactivateKeepAwake();
     clearInterval(this.state.timer);
   }
+  /* // Clear username for testing
+  async componentDidMount() {
+    try {
+      await AsyncStorage.removeItem('username');
+      return true;
+  }
+  catch(exception) {
+      return false;
+  }
+  }
+  */
   logDrive = () => {
     this.props.navigation.navigate('Logdrive')
 
   }
+  
   onButtonStart = () => {
  if (!(this.state.startDisable)){
   activateKeepAwake();
@@ -80,6 +92,7 @@ export default class Mainpage extends React.Component {
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
 
   render() {
+
     const Handbook = () => {
       WebBrowser.openBrowserAsync('https://www.cyberdriveillinois.com/publications/pdf_publications/dsd_a112.pdf');
       }
