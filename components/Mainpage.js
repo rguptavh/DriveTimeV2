@@ -92,7 +92,6 @@ export default class Mainpage extends React.Component {
   }
  
 }
- // test
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
 
   render() {
@@ -125,7 +124,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
           
 
   }}resizeMode="contain">
-                 <Text style={styles.counterText}>{this.state.hours_Counter} : {this.state.minutes_Counter} : {this.state.seconds_Counter}</Text>
+                 <Text style={styles.counterText}>{this.state.hours_Counter}:{this.state.minutes_Counter}:{this.state.seconds_Counter}</Text>
 
   </ImageBackground>
           </TouchableOpacity>
@@ -231,7 +230,7 @@ const styles = StyleSheet.create({
       fontSize: 20
   },
   counterText:{
-    fontSize: entireScreenWidth*40/380,textAlign: 'center',
+    fontSize: entireScreenWidth*50/380,textAlign: 'center',
     color: 'white',
     fontFamily: 'Nova',
   }
