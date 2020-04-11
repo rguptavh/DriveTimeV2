@@ -11,7 +11,7 @@ export default class App extends React.Component {
       stickyHeaderIndices: []
     };
   }
-  
+ 
   _renderItem = ({ item }) => {
     if (item.header) {
   
@@ -42,7 +42,7 @@ export default class App extends React.Component {
       );
     }
   };
-  
+  static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
     const onPress = () => {
       this.props.navigation.navigate('Main')

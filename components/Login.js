@@ -86,7 +86,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
                 road:'HEADER',
                 weather: 'HEADER',
                 id: ""+(length+(length2-result.length)),
-                 date: data[i].date
+                 date: moment(data[i].date,'MM-DD-YYYY').format('MMMM Do, YYYY')
                }
                data.splice(i, 0,he);
              }
