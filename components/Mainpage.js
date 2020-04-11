@@ -92,7 +92,7 @@ export default class Mainpage extends React.Component {
   }
  
 }
-
+ // test
 static navigationOptions = { headerMode: 'none', gestureEnabled: false };
 
   render() {
