@@ -6,6 +6,7 @@ import {createAppContainer } from 'react-navigation';
 import * as Font from 'expo-font';
 import log from './components/Login';
 import mainscr from './components/Mainpage';
+import drives from './components/Drives';
 import logdrive from './components/Logdrive';
 import { AppLoading } from 'expo';
 
@@ -33,6 +34,8 @@ async componentDidMount() {
     }
     await Font.loadAsync({
       'Nova': require('./assets/fonts/NovaMono.ttf'),
+      'WSR': require('./assets/fonts/WorkSans-Regular.ttf'),
+      'WSB': require('./assets/fonts/WorkSans-SemiBold.ttf'),
     });
     this.setState({ assetsLoaded: true });
 }
@@ -50,8 +53,12 @@ async componentDidMount() {
         },
         Logdrive: {
           screen: logdrive
+        },
+        Drives: {
+          screen: drives
         }
-      },{
+      },
+    {
         initialRouteName: logged ? 'Main' : 'Login',
         headerMode: 'none'
       });

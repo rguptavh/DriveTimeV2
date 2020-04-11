@@ -25,7 +25,7 @@ export default class Mainpage extends React.Component {
     deactivateKeepAwake();
     clearInterval(this.state.timer);
   }
-  /* // Clear username for testing
+   // Clear username for testing
   async componentDidMount() {
     try {
       await AsyncStorage.removeItem('username');
@@ -35,9 +35,13 @@ export default class Mainpage extends React.Component {
       return false;
   }
   }
-  */
+  
   logDrive = () => {
     this.props.navigation.navigate('Logdrive')
+
+  }
+  pastDrives = () => {
+    this.props.navigation.navigate('Drives')
 
   }
   
@@ -148,7 +152,7 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       <TouchableOpacity
         style={{    
         height: entireScreenWidth/2*0.9,
-        flex:1}}
+        flex:1}} onPress = {this.pastDrives}
    
       >
         <Image source={require('../assets/pdrive.png')} style = {{

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage} from 'react-native';
-
+import moment from 'moment'; 
 
 
 export default class Login extends React.Component {
@@ -35,19 +35,76 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
         var ok;
         Http.onreadystatechange = (e) => {
             ok = Http.responseText;
-        if (Http.readyState == 4)
-        {
-          if(String(ok) == "true"){
-            this.props.navigation.navigate('Main')
-            global.uname = this.state.username;
-            AsyncStorage.setItem('username', this.state.username);
+        if (Http.readyState == 4){
+          console.log(String(ok));
+          var response = String(ok).split(",");
+          console.log(response.join(","))
+          if(response[0] == "true"){
 
+            global.uname = this.state.username;
+            alert("good")
+
+            AsyncStorage.setItem('username', this.state.username);
+            var data = [];
+            for (var x=0; x<(response.length-1)/7;x++){
+              data.push({
+                description: response[7*x+1],
+                tod: response[7*x+2],
+                date: response[7*x+3],
+                time: response[7*x+4],
+                minutes: response[7*x+5],
+                road: response[7*x+6],
+                weather: response[7*x+7],
+                id: ""+x,
+                header: false
+              }
+              )
             }
-            else{
+            console.log(JSON.stringify(data))
+            console.log(moment(data[0].date + " " + data[0].time, 'MM-DD-YYYY h:mm A'))
+            data = data.sort((a,b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
+            const map = new Map();
+            let result = [];
+            for (const item of data) {
+                if(!map.has(item.date)){
+                    map.set(item.date, true);    // set any value to Map
+                    result.push(item.date);
+                }
+           }
+           const length = data.length;
+           const length2 = result.length;
+           for (i=0; i<data.length;i++){
+             if (result.includes(data[i].date)){
+               result.shift();
+               console.log(result)
+               const he = {
+                 header: true,
+                 description: 'HEADER',
+                tod: 'HEADER',
+                time: 'HEADER',
+                minutes: 'HEADER',
+                road:'HEADER',
+                weather: 'HEADER',
+                id: ""+(length+(length2-result.length)),
+                 date: data[i].date
+               }
+               data.splice(i, 0,he);
+             }
+           }
+            global.drives = data;
+            console.log(JSON.stringify(data))
+            this.props.navigation.navigate('Main')
+            
+            }
+            else if (response[0] == "false"){
               alert("Failed login");
             }
+            else{
+
+              alert("Server error");
+            }
             this.setState({loading: false});
-        }
+          }
         }
     }
     return (
