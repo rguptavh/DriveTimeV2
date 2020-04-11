@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
       fontSize: 20
   },
   counterText:{
-    fontSize: entireScreenWidth*0.85*616/1416*0.3,textAlign: 'center',
+    fontSize: entireScreenWidth*40/380,textAlign: 'center',
     color: 'white',
     fontFamily: 'Nova',
   }
