@@ -58,8 +58,50 @@ export default class App extends React.Component {
     else{
       ree = 1.75*wid;
     }
-
+    if (global.drives.length == 0){
+      return (
+     
+        <View style={styles.container}> 
+        <ImageBackground source={require('../assets/login.png')} style={styles.image}>
+        <View style = {{flex:1, width: '90%', alignItems: 'center'}}>
+            <Image source={require('../assets/pastdrives.png')} style = {{
+      height: '100%',
+      width: '84%',
+      marginTop:'10%',
+      flex: 1,
+    }}resizeMode="contain"></Image></View>
+    <View style = {{width: '100%', flex: 6, justifyContent: 'center', alignItems: 'center'}}>
+        <Text style = {{fontSize: 25*wid, color: 'white', fontFamily: 'WSB'}}>Please log your first drive!</Text>
+        </View>
+         <View style = {{
+        width: '73%',
+        flex:1,
+        justifyContent:'center'
+      }}>
+      <TouchableOpacity
+          style={{    
+          height: entireScreenWidth*0.73*276/1096,
+          width: '100%',}}
+          onPress={onPress}
+          disabled={this.state.loading}
+          
+        >
+          <Image source={require('../assets/backbut.png')} style = {{
+            height: '100%',
+            width: '100%',
+            flex:1
+            
+  
+    }}resizeMode="contain"></Image>
+  </TouchableOpacity>
+  </View>
+        </ImageBackground>
+        </View>
+      );
+    }
+    else{
     return (
+     
       <View style={styles.container}> 
       <ImageBackground source={require('../assets/login.png')} style={styles.image}>
       <View style = {{flex:1, width: '90%', alignItems: 'center'}}>
@@ -103,6 +145,7 @@ export default class App extends React.Component {
       </View>
     );
   }
+}
 }
 const styles = StyleSheet.create({
   container: {

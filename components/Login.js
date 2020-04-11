@@ -42,8 +42,6 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
           if(response[0] == "true"){
 
             global.uname = this.state.username;
-            alert("good")
-
             AsyncStorage.setItem('username', this.state.username);
             var data = [];
             for (var x=0; x<(response.length-1)/7;x++){
@@ -61,7 +59,6 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
               )
             }
             console.log(JSON.stringify(data))
-            console.log(moment(data[0].date + " " + data[0].time, 'MM-DD-YYYY h:mm A'))
             data = data.sort((a,b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
             const map = new Map();
             let result = [];
