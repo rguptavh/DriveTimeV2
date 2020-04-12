@@ -112,6 +112,9 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
       alert("Please fill all fields");
     }
   }
+  const onPress2 = () => {
+    this.props.navigation.navigate('Main')
+  }
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
         <View style={styles.container}>
@@ -232,14 +235,32 @@ static navigationOptions = { headerMode: 'none', gestureEnabled: false };
     
   </ImageBackground>
   <View style = {{
-      width: '73%',
+      width: '95%',
       flex:1,
-      justifyContent:'center'
+      alignItems: 'center',
+      flexDirection: 'row'
     }}>
     <TouchableOpacity
         style={{    
         height: entireScreenWidth*0.73*276/1096,
-        width: '100%',}}
+        width: '100%',flex: 1}}
+        onPress={onPress2}
+        disabled={this.state.loading}
+        
+        
+      >
+        <Image source={require('../assets/cancelbut.png')} style = {{
+          height: '100%',
+          width: '100%',
+          flex:1
+          
+
+  }}resizeMode="contain"></Image>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{    
+        height: entireScreenWidth*0.73*276/1096,
+        width: '100%',flex: 1}}
         onPress={onPress}
         disabled={this.state.loading}
         
