@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
-import {createAppContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import * as Font from 'expo-font';
 import log from './components/Login';
 import mainscr from './components/Mainpage';
@@ -12,23 +12,23 @@ import { AppLoading } from 'expo';
 
 let logged = false;
 export default class App extends React.Component {
-  static navigationOptions = { headerShown: 'false', headerMode: 'screen', gestureEnabled: false }; 
+  static navigationOptions = { headerShown: 'false', headerMode: 'screen', gestureEnabled: false };
   state = {
     assetsLoaded: false,
-};
+  };
 
-async componentDidMount() {
-    
+  async componentDidMount() {
+
     try {
       const name = await AsyncStorage.getItem('username')
       console.log(name);
       console.log(global.logged);
 
-      if (name !== null && name !='undefined') {
+      if (name !== null && name != 'undefined') {
         logged = true;
         global.uname = name;
       }
-      
+
     } catch (e) {
       console.log('Failed to load .')
     }
@@ -38,12 +38,12 @@ async componentDidMount() {
       'WSB': require('./assets/fonts/WorkSans-SemiBold.ttf'),
     });
     this.setState({ assetsLoaded: true });
-}
+  }
 
 
   render() {
-   
-    if (this.state.assetsLoaded){
+
+    if (this.state.assetsLoaded) {
       const AppNavigator = createStackNavigator({
         Login: {
           screen: log
@@ -58,15 +58,15 @@ async componentDidMount() {
           screen: drives
         }
       },
-    {
-        initialRouteName: logged ? 'Main' : 'Login',
-        headerMode: 'none'
-      });
-      
+        {
+          initialRouteName: logged ? 'Main' : 'Login',
+          headerMode: 'none'
+        });
+
       const AppContainer = createAppContainer(AppNavigator);
-    return <AppContainer />;
+      return <AppContainer />;
     }
-    else{
+    else {
       return <AppLoading></AppLoading>;
     }
   }
