@@ -122,16 +122,20 @@ export default class App extends React.Component {
        <View style = {{
       width: '73%',
       flex:1,
-      justifyContent:'center'
+      paddingBottom: '2%',
+      justifyContent:'center',
+      alignItems: 'center'
+   
     }}>
     <TouchableOpacity
         style={{    
-        height: entireScreenWidth*0.73*276/1096,
-        width: '100%',}}
+        flex: 1,
+        width: entireScreenHeight /8*0.98,
+}}
         onPress={onPress}
         disabled={this.state.loading}
         
-      >
+      > 
         <Image source={require('../assets/backbut.png')} style = {{
           height: '100%',
           width: '100%',
