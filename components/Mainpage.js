@@ -17,9 +17,7 @@ export default class Mainpage extends React.Component {
       seconds_Counter: '00',
       hours_Counter: '00',
       startDisable: false,
-      assetsLoaded: false,
-      username: 'aadiraju',
-      password: '789'
+      loading: global.logging
     }
   }
 
@@ -28,107 +26,45 @@ export default class Mainpage extends React.Component {
     clearInterval(this.state.timer);
   }
   // Clear username for testing
-  async componentDidMount() {
+   componentDidMount() {
     try {
-      await AsyncStorage.removeItem('username');
+     // await AsyncStorage.removeItem('username');
+     console.log(this.state.loading)
+      if (global.drives == null){
+        let times = setInterval(() => {
+          console.log(global.logging)
+          if (global.drives != null){
+            this.setState({ loading: false });
+            clearInterval(this.state.times);
+          }
+         
+        }, 1000);
+        this.setState({ times });
+      }
       return true;
     }
     catch (exception) {
       return false;
     }
   }
-  
+
 
   logDrive = () => {
     this.props.navigation.navigate('Logdrive')
 
   }
   pastDrives = () => {
-    var uname = this.state.username;
-      var pword = this.state.password;
-      this.setState({ loading: true });
-      const Http = new XMLHttpRequest();
-      const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
-      var data = "?username=" + uname + "&password=" + pword + "&action=login";
-      Http.open("GET", String(url + data));
-      Http.send();
-      var ok;
-      Http.onreadystatechange = (e) => {
-        ok = Http.responseText;
-        if (Http.readyState == 4) {
-          console.log(String(ok));
-          var response = String(ok).split(",");
-          console.log(response.join(","))
-          if (response[0] == "true") {
-
-            global.uname = this.state.username;
-            AsyncStorage.setItem('username', this.state.username);
-            var data = [];
-            for (var x = 0; x < (response.length - 1) / 7; x++) {
-              data.push({
-                description: response[7 * x + 1],
-                tod: response[7 * x + 2],
-                date: response[7 * x + 3],
-                time: response[7 * x + 4],
-                minutes: response[7 * x + 5],
-                road: response[7 * x + 6],
-                weather: response[7 * x + 7],
-                id: "" + x,
-                header: false
-              }
-              )
-            }
-            console.log(JSON.stringify(data))
-            data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
-            const map = new Map();
-            let result = [];
-            for (const item of data) {
-              if (!map.has(item.date)) {
-                map.set(item.date, true);    // set any value to Map
-                result.push(item.date);
-              }
-            }
-            const length = data.length;
-            const length2 = result.length;
-            for (i = 0; i < data.length; i++) {
-              if (result.includes(data[i].date)) {
-                result.shift();
-                console.log(result)
-                const he = {
-                  header: true,
-                  description: 'HEADER',
-                  tod: 'HEADER',
-                  time: 'HEADER',
-                  minutes: 'HEADER',
-                  road: 'HEADER',
-                  weather: 'HEADER',
-                  id: "" + (length + (length2 - result.length)),
-                  date: moment(data[i].date, 'MM-DD-YYYY').format('MMMM Do, YYYY')
-                }
-                data.splice(i, 0, he);
-              }
-            }
-            global.drives = data;
-            console.log(JSON.stringify(data))
-            this.props.navigation.navigate('Drives')
-          }
-          else if (response[0] == "false") {
-            alert("Failed login");
-          }
-          else {
-
-            alert("Server error");
-          }
-          this.setState({ loading: false });
-        }
-      }
+    if (this.state.loading){
+      alert("Your drives are loading")
+    }
+    else{
+    this.props.navigation.navigate('Drives')
+    }
 
   }
 
   dashBoard = () => {
-      
-      
-    
+
     this.props.navigation.navigate('Dashboard')
 
       }

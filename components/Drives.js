@@ -31,13 +31,13 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <ListItem style={{ marginLeft: 0 }} onPress={() =>
-          alert(item.time)
-        }>
-          <Body>
-            <Text style={{ flex: 1, fontFamily: 'WSB', color: 'white' }}>{item.minutes} minutes</Text>
-            <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.tod} - {item.road} - {item.weather}</Text>
-          </Body>
+        <ListItem style={{ marginLeft: 0 }}>
+          <TouchableOpacity style={{ width: '100%', flex: 1 }} onPress={() => alert(item.time)}>
+            <Body>
+              <Text style={{ flex: 1, fontFamily: 'WSB', color: 'white' }}>{item.minutes} minutes</Text>
+              <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.tod} - {item.road} - {item.weather}</Text>
+            </Body>
+          </TouchableOpacity>
         </ListItem>
       );
     }
@@ -108,7 +108,7 @@ export default class App extends React.Component {
             <View style={{ flex: 1, width: '90%', alignItems: 'center' }}>
               <Image source={require('../assets/pastdrives.png')} style={{
                 height: '100%',
-                width: '84%',
+                width: '100%',
                 marginTop: '10%',
                 flex: 1,
               }} resizeMode="contain"></Image></View>
