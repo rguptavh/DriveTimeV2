@@ -42,10 +42,10 @@ export default class App extends React.Component {
       'WSR': require('./assets/fonts/WorkSans-Regular.ttf'),
       'WSB': require('./assets/fonts/WorkSans-SemiBold.ttf'),
     });
-    
-    if (logged){
-    global.logging = true;
-    this.setState({ assetsLoaded: true });
+
+    if (logged) {
+      global.logging = true;
+      this.setState({ assetsLoaded: true });
       var uname = name;
       const Http = new XMLHttpRequest();
       const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
@@ -71,49 +71,49 @@ export default class App extends React.Component {
               id: "" + x,
               header: false
             }
-            )
+            );
           }
-            console.log(JSON.stringify(data))
-            data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
-            const map = new Map();
-            let result = [];
-            for (const item of data) {
-              if (!map.has(item.date)) {
-                map.set(item.date, true);    // set any value to Map
-                result.push(item.date);
-              }
+          console.log(JSON.stringify(data))
+          data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
+          const map = new Map();
+          let result = [];
+          for (const item of data) {
+            if (!map.has(item.date)) {
+              map.set(item.date, true);    // set any value to Map
+              result.push(item.date);
             }
-            console.log(result)
-            const length = data.length;
-            const length2 = result.length;
-            for (i = 0; i < data.length; i++) {
-              if (result.includes(data[i].date)) {
-                result.shift();
-                const he = {
-                  header: true,
-                  description: 'HEADER',
-                  tod: 'HEADER',
-                  time: 'HEADER',
-                  minutes: 'HEADER',
-                  road: 'HEADER',
-                  weather: 'HEADER',
-                  id: "" + (length + (length2 - result.length)),
-                  date: moment(data[i].date, 'MM-DD-YYYY').format('MMMM Do, YYYY')
-                }
-                data.splice(i, 0, he);
-              }
-            }
-            global.drives = data;
-            global.logging = false;
-            console.log(JSON.stringify(data))
-            console.log(ok)
           }
+          console.log(result)
+          const length = data.length;
+          const length2 = result.length;
+          for (i = 0; i < data.length; i++) {
+            if (result.includes(data[i].date)) {
+              result.shift();
+              const he = {
+                header: true,
+                description: 'HEADER',
+                tod: 'HEADER',
+                time: 'HEADER',
+                minutes: 'HEADER',
+                road: 'HEADER',
+                weather: 'HEADER',
+                id: "" + (length + (length2 - result.length)),
+                date: data[i].date
+              }
+              data.splice(i, 0, he);
+            }
+          }
+          global.drives = data;
+          global.logging = false;
+          console.log(JSON.stringify(data))
+          console.log(ok)
         }
       }
-      else{
-        this.setState({ assetsLoaded: true });
-      }
     }
+    else {
+      this.setState({ assetsLoaded: true });
+    }
+  }
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }

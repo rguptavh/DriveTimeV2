@@ -1,6 +1,8 @@
 import React from "react";
-import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image } from "react-native";
+import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image, Alert } from "react-native";
 import { Text, ListItem, Left, Body, Icon, Right, Title } from "native-base";
+import Swipeable from 'react-native-swipeout';
+import moment from 'moment';
 
 
 export default class App extends React.Component {
@@ -8,11 +10,56 @@ export default class App extends React.Component {
     super();
     this.state = {
       data: global.drives,
-      stickyHeaderIndices: []
+      stickyHeaderIndices: [],
+      isSwiping: false
     };
   }
+  deleteNote(item) {
+    Alert.alert(
+      "Delete Drive",
+      "Are you sure you want to delete your drive?",
+      [
+        {
+          text: "No"
+        },
+        { text: "Yes", onPress: () => {
+          var temp = this.state.data;
+          for (i = 0; i<temp.length;i++){
+            if(temp[i].id == item.id){
+              temp.splice(i,1);
+              break;
+            }
+          }
+          let result = [];
+          const map = new Map();
+            for (const item of temp) {
+              if (!map.has(item.date) && !item.header) {
+                map.set(item.date, true);    // set any value to Map
+                result.push(item.date);
+              }
+            }
+            for (i = 0; i<temp.length; i++){
+              if (temp[i].header && !result.includes(temp[i].date)){
+                temp.splice(i,1);
+                break;
+              }
+            }
+            global.drives = temp;
+          this.setState({data: temp});
 
+        }
+       }
+      ],
+      { cancelable: false }
+    );
+  }
   _renderItem = ({ item }) => {
+    let swipeBtns = [{
+      text: 'Delete',
+      backgroundColor: 'red',
+      onPress: () => {this.deleteNote(item) }
+    }];
+
     if (item.header) {
 
       return (
@@ -20,7 +67,7 @@ export default class App extends React.Component {
         <ListItem itemDivider>
           <Body style={{ marginRight: 0, alignItems: 'center' }}>
             <Text style={{ fontWeight: "bold" }}>
-              {item.date}
+              {moment(item.date, 'MM-DD-YYYY').format('MMMM Do, YYYY')}
             </Text>
           </Body>
         </ListItem>
@@ -31,7 +78,9 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <ListItem style={{ marginLeft: 0 }}>
+        <Swipeable right={swipeBtns} onSwipeStart={() => this.setState({isSwiping: true})}
+        onSwipeRelease={() => this.setState({isSwiping: false})} style = {{backgroundColor: 'transparent'}}>
+        <ListItem style={{ marginLeft: 0, backgroundColor: 'transparent' }}>
           <TouchableOpacity style={{ width: '100%', flex: 1 }} onPress={() => alert(item.time)}>
             <Body>
               <Text style={{ flex: 1, fontFamily: 'WSB', color: 'white' }}>{item.minutes} minutes</Text>
@@ -39,6 +88,7 @@ export default class App extends React.Component {
             </Body>
           </TouchableOpacity>
         </ListItem>
+        </Swipeable>
       );
     }
   };
@@ -47,6 +97,7 @@ export default class App extends React.Component {
     const onPress = () => {
       this.props.navigation.navigate('Main')
     }
+    console.log(this.state.isSwiping)
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
     const entireScreenWidth = Dimensions.get('window').width;
@@ -117,6 +168,7 @@ export default class App extends React.Component {
                 data={this.state.data}
                 renderItem={this._renderItem}
                 keyExtractor={item => item.id}
+                scrollEnabled={!this.state.isSwiping}
               // stickyHeaderIndices={this.state.stickyHeaderIndices}
               />
             </View>

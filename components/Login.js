@@ -83,7 +83,7 @@ export default class Login extends React.Component {
                   road: 'HEADER',
                   weather: 'HEADER',
                   id: "" + (length + (length2 - result.length)),
-                  date: moment(data[i].date, 'MM-DD-YYYY').format('MMMM Do, YYYY')
+                  date: data[i].date
                 }
                 data.splice(i, 0, he);
               }

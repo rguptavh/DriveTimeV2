@@ -25,20 +25,20 @@ export default class Mainpage extends React.Component {
     deactivateKeepAwake();
     clearInterval(this.state.timer);
   }
-  // Clear username for testing
-   componentDidMount() {
+
+  componentDidMount() {
     try {
-     // await AsyncStorage.removeItem('username');
-     console.log(this.state.loading)
-      if (global.drives == null){
+      //AsyncStorage.removeItem('username');  // Clear username for testing
+      console.log(this.state.loading)
+      if (global.drives == null) {
         let times = setInterval(() => {
           console.log(global.logging)
-          if (global.drives != null){
+          if (global.drives != null) {
             this.setState({ loading: false });
             clearInterval(this.state.times);
           }
-         
-        }, 1000);
+
+        }, 100);
         this.setState({ times });
       }
       return true;
@@ -54,11 +54,11 @@ export default class Mainpage extends React.Component {
 
   }
   pastDrives = () => {
-    if (this.state.loading){
+    if (this.state.loading) {
       alert("Your drives are loading")
     }
-    else{
-    this.props.navigation.navigate('Drives')
+    else {
+      this.props.navigation.navigate('Drives')
     }
 
   }
@@ -67,8 +67,8 @@ export default class Mainpage extends React.Component {
 
     this.props.navigation.navigate('Dashboard')
 
-      }
-  
+  }
+
 
   onButtonStart = () => {
     if (!(this.state.startDisable)) {
