@@ -78,7 +78,7 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <Swipeable right={swipeBtns} onSwipeStart={() => this.setState({isSwiping: true})}
+        <Swipeable right={swipeBtns} onSwipeStart={() => console.log("start")}
         onSwipeRelease={() => this.setState({isSwiping: false})} style = {{backgroundColor: 'transparent'}}>
         <ListItem style={{ marginLeft: 0, backgroundColor: 'transparent' }}>
           <TouchableOpacity style={{ width: '100%', flex: 1 }} onPress={() => alert(item.time)}>
