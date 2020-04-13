@@ -84,7 +84,7 @@ export default class App extends React.Component {
           <TouchableOpacity style={{ width: '100%', flex: 1 }} onPress={() => alert(item.time)}>
             <Body>
               <Text style={{ flex: 1, fontFamily: 'WSB', color: 'white' }}>{item.minutes} minutes</Text>
-              <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.tod} - {item.road} - {item.weather}</Text>
+              <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.tod} - {item.road} - {item.weather} - {item.time}</Text>
             </Body>
           </TouchableOpacity>
         </ListItem>
