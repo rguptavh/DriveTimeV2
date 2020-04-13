@@ -58,7 +58,7 @@ export default class App extends React.Component {
       text: 'Delete',
       backgroundColor: 'red',
       onPress: () => {this.deleteNote(item) }
-    }];
+    },];
 
     if (item.header) {
 
@@ -84,6 +84,7 @@ export default class App extends React.Component {
           <TouchableOpacity style={{ width: '100%', flex: 1 }} onPress={() => alert(item.time)}>
             <Body>
               <Text style={{ flex: 1, fontFamily: 'WSB', color: 'white' }}>{item.minutes} minutes</Text>
+              <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.description}</Text>
               <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.tod} - {item.road} - {item.weather} - {item.time}</Text>
             </Body>
           </TouchableOpacity>
@@ -176,6 +177,7 @@ export default class App extends React.Component {
               width: '73%',
               flex: 1,
               paddingBottom: '2%',
+              paddingTop: '2%',
               justifyContent: 'center',
               alignItems: 'center'
 
@@ -183,7 +185,7 @@ export default class App extends React.Component {
               <TouchableOpacity
                 style={{
                   flex: 1,
-                  width: entireScreenHeight / 8 * 0.98,
+                  width: entireScreenHeight / 8 * 0.96,
                 }}
                 onPress={onPress}
                 disabled={this.state.loading}
