@@ -72,7 +72,6 @@ export default class Login extends React.Component {
       var comparetime = moment(String(this.state.time), 'h:mm A');
       var night = sunset.isBefore(comparetime) || comparetime.isBefore(sunrise) ? 'Night' : 'Day';
       var weather = this.state.weather;
-      var pword = '';
       if (uname == '') {
         alert("Please log in again");
       }

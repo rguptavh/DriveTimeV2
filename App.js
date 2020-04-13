@@ -103,10 +103,11 @@ export default class App extends React.Component {
               data.splice(i, 0, he);
             }
           }
-          global.drives = data;
-          global.logging = false;
           console.log(JSON.stringify(data))
           console.log(ok)
+          global.drives = data;
+          global.logging = false;
+          
         }
       }
     }

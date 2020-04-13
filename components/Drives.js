@@ -46,9 +46,31 @@ export default class App extends React.Component {
             }
             global.drives = temp;
           this.setState({data: temp});
-
+          var date = String(item.date);
+          var time = String(item.time);
+          var minutes = parseInt(String(item.minutes));
+          var description = String(item.description).trim().replace(/\n/g, " ");
+          var road = item.road;
+          var night = item.tod;
+          var weather = item.weather;
+          const Http = new XMLHttpRequest();
+          const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
+          var data = "?username=" + global.uname + "&date=" + date + "&time=" + time + "&description=" + description + "&tod=" + night + "&time=" + time + "&minutes=" + minutes + "&road=" + road + "&weather=" + weather + "&action=delete";
+          console.log(data);
+          Http.open("GET", String(url + data));
+          Http.send();
+          var ok;
+          Http.onreadystatechange = (e) => {
+            ok = Http.responseText;
+            if (Http.readyState == 4) {
+              if (String(ok) == "Success") {
+                
+              }
+              else {
+                alert("Failed to delete on server, please try again later");
+              }
         }
-       }
+       }}}
       ],
       { cancelable: false }
     );
@@ -95,6 +117,7 @@ export default class App extends React.Component {
   };
   static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
+    console.log(global.drives)
     const onPress = () => {
       this.props.navigation.navigate('Main')
     }
