@@ -93,15 +93,68 @@ export default class Login extends React.Component {
           Http.onreadystatechange = (e) => {
             ok = Http.responseText;
             if (Http.readyState == 4) {
-              if (String(ok) == "Success") {
-                alert("Saved!")
-                global.minutes = '';
-                this.props.navigation.navigate('Main')
+              console.log(String(ok));
+          var response = String(ok).split(",");
+          console.log(response.join(","))
+          if (response[0] == "true") {
+            var data = [];
+            for (var x = 0; x < (response.length - 1) / 7; x++) {
+              data.push({
+                description: response[7 * x + 1],
+                tod: response[7 * x + 2],
+                date: response[7 * x + 3],
+                time: response[7 * x + 4],
+                minutes: response[7 * x + 5],
+                road: response[7 * x + 6],
+                weather: response[7 * x + 7],
+                id: "" + x,
+                header: false
               }
-              else {
-                alert("Failed to save, please try again later");
+              )
+            }
+            console.log(JSON.stringify(data))
+            data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
+            const map = new Map();
+            let result = [];
+            for (const item of data) {
+              if (!map.has(item.date)) {
+                map.set(item.date, true);    // set any value to Map
+                result.push(item.date);
               }
-              this.setState({ loading: false });
+            }
+            const length = data.length;
+            const length2 = result.length;
+            for (i = 0; i < data.length; i++) {
+              if (result.includes(data[i].date)) {
+                result.shift();
+                console.log(result)
+                const he = {
+                  header: true,
+                  description: 'HEADER',
+                  tod: 'HEADER',
+                  time: 'HEADER',
+                  minutes: 'HEADER',
+                  road: 'HEADER',
+                  weather: 'HEADER',
+                  id: "" + (length + (length2 - result.length)),
+                  date: data[i].date
+                }
+                data.splice(i, 0, he);
+              }
+            }
+            global.drives = data;
+            console.log(JSON.stringify(data))
+            this.props.navigation.navigate('Main')
+
+          }
+          else if (response[0] == "false") {
+            alert("Failed login");
+          }
+          else {
+
+            alert("Server error");
+          }
+          this.setState({ loading: false });
             }
           }
         }
