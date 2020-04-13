@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image, Alert } from "react-native";
 import { Text, ListItem, Left, Body, Icon, Right, Title } from "native-base";
-import Swipeable from 'react-native-swipeout';
+import Swipeout from 'react-native-swipeout';
 import moment from 'moment';
 
 
@@ -78,8 +78,8 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <Swipeable right={swipeBtns} onSwipeStart={() => console.log("start")}
-        onSwipeRelease={() => this.setState({isSwiping: false})} style = {{backgroundColor: 'transparent'}}>
+        <Swipeout  right={swipeBtns} onOpen={() => this.setState({isSwiping: true})}
+        onClose={() => this.setState({isSwiping: false})} style = {{backgroundColor: 'transparent'}}>
         <ListItem style={{ marginLeft: 0, backgroundColor: 'transparent' }}>
           <TouchableOpacity style={{ width: '100%', flex: 1 }} onPress={() => alert(item.time)}>
             <Body>
@@ -88,7 +88,7 @@ export default class App extends React.Component {
             </Body>
           </TouchableOpacity>
         </ListItem>
-        </Swipeable>
+        </Swipeout >
       );
     }
   };
