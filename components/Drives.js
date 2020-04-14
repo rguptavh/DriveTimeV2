@@ -56,6 +56,40 @@ export default class App extends React.Component {
           var road = item.road;
           var night = item.tod;
           var weather = item.weather;
+          global.totalhrs = global.totalhrs - (minutes/60);
+          global.totalmins = global.totalmins - (minutes%60);
+          if(night == 'Night'){
+            global.nighthrs -= (minutes/60);
+            global.nightmins -= (minutes%60);
+          }
+          if(road=='Local')
+            global.local -= (minutes/60).toFixed(3);
+          else if(road=='Highway')
+            global.highway -= (minutes/60).toFixed(3);
+          else if(road=='Tollway')
+            global.tollway -= (minutes/60).toFixed(3);
+          else if(road=='Urban')
+            global.urban -= (minutes/60).toFixed(3);
+          else if(road=='Rural')
+            global.rural -= (minutes/60).toFixed(3);
+          else
+            global.plot -= (minutes/60).toFixed(3);
+
+          if(weather=='Sunny')
+            global.sunny -= (minutes/60).toFixed(3);
+          else if(weather == 'Rain')
+            global.rain -= (minutes/60).toFixed(3);
+          else if(weather == 'Snow')
+            global.snow -= (minutes/60).toFixed(3);
+          else if(weather == 'Fog')
+            global.fog -= (minutes/60).toFixed(3);
+          else if(weather == 'Hail')
+            global.hail -= (minutes/60).toFixed(3);
+          else if(weather == 'Sleet')
+            global.sleet -= (minutes/60).toFixed(3);
+          else
+            global.frain -= (minutes/60).toFixed(3);
+
           const Http = new XMLHttpRequest();
           const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
           var data = "?username=" + global.uname + "&date=" + date + "&time=" + time + "&description=" + description + "&tod=" + night + "&time=" + time + "&minutes=" + minutes + "&road=" + road + "&weather=" + weather + "&action=delete";
