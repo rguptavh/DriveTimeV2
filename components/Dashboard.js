@@ -60,7 +60,9 @@ export default class Login extends React.Component {
   }
   async checkdate() {
     dat = await AsyncStorage.getItem('date')
-    if (dat != null) {
+    var d1 = moment(dat,'MM-DD-YYYY')
+    var d2 = moment();
+    if (dat != null && d1.isSameOrAfter(d2,'day')) {
       console.log(dat);
       this.setState({ date: dat });
       var a = moment();
