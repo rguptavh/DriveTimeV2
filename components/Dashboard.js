@@ -4,6 +4,8 @@ import moment from 'moment';
 import * as Progress from 'react-native-progress';
 import DatePicker from 'react-native-datepicker'
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
+import ScalableText from 'react-native-text';
+
 
 
 const hours = 15;
@@ -48,12 +50,12 @@ export default class Login extends React.Component {
             <View style={{ flex: 16, width: '100%', alignItems: 'center' }}>
               <View style={styles.topcard}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', maxWidth: '90%' }}>
-                  <Text style={{ marginTop: '10%' }}>
-                    <Text style={{ fontSize: RFValue(55), fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
-                    <Text style={{ fontSize: RFValue(25), fontFamily: 'WSR', color: 'white' }}>hours</Text>
-                    <Text style={{ fontSize: RFValue(55), fontFamily: 'WSR', color: 'white' }}> {minutes}</Text>
-                    <Text style={{ fontSize: RFValue(25), fontFamily: 'WSR', color: 'white' }}>minutes</Text>
-                  </Text>
+                  <ScalableText style={{ marginTop: '10%' }}>
+                    <ScalableText style={{ fontSize: 55, fontFamily: 'WSR', color: 'white' }}>{hours}</ScalableText>
+                    <ScalableText style={{ fontSize: 30, fontFamily: 'WSR', color: 'white' }}>hours</ScalableText>
+                    <ScalableText style={{ fontSize: 55, fontFamily: 'WSR', color: 'white' }}> {minutes}</ScalableText>
+                    <ScalableText style={{ fontSize: 30, fontFamily: 'WSR', color: 'white' }}>minutes</ScalableText>
+                  </ScalableText>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                   <Progress.Bar progress={this.state.progress1} width={entireScreenWidth * 0.8} animated={true} height={rem * 20} borderRadius={25} color='#BBE2FF' borderColor='#D0D0D0' unfilledColor='white' />
@@ -64,12 +66,12 @@ export default class Login extends React.Component {
               <View style={styles.midcard}>
                 <View style={{ height: '100%', flex: 2 }}>
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                    <Text style={{ marginTop: '5%' }}>
-                      <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
-                      <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>hours</Text>
-                      <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}> {minutes}</Text>
-                      <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
-                    </Text>
+                    <ScalableText style={{ marginTop: '5%' }}>
+                      <ScalableText style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{hours}</ScalableText>
+                      <ScalableText style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>hours</ScalableText>
+                      <ScalableText style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}> {minutes}</ScalableText>
+                      <ScalableText style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>minutes</ScalableText>
+                    </ScalableText>
                   </View>
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                     <Progress.Bar progress={this.state.progress2} width={entireScreenWidth * 0.5} animated={true} height={rem * 15} borderRadius={25} color='#BBE2FF' borderColor='#D0D0D0' unfilledColor='white' />
@@ -88,9 +90,9 @@ export default class Login extends React.Component {
               <View style={styles.midcard2}>
                 <View style={{ height: '100%', flex: 1 }}>
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                    <Text style={{ marginTop: '5%' }}>
-                      <Text style={{ fontSize: wid * 22, fontFamily: 'WSR', color: 'white' }}>License Date:</Text>
-                    </Text>
+                    <ScalableText style={{ marginTop: '5%' }}>
+                      <ScalableText style={{ fontSize: wid * 22, fontFamily: 'WSR', color: 'white' }}>License Date:</ScalableText>
+                    </ScalableText>
                   </View>
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: '100%' }}>
                     <View style={{ width: '80%', height: '80%', borderRadius: 10, backgroundColor: '#D0D0D0', borderColor: 'white', borderWidth: 2, marginBottom: '20%', alignItems: 'center', justifyContent: 'center' }}>
@@ -151,14 +153,14 @@ export default class Login extends React.Component {
                 </View>
                 <View style={{ height: '90%', flex: 1 }}>
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                    <Text style={{ marginTop: '14%' }}>
-                      <Text style={{ fontSize: wid * 18, fontFamily: 'WSR', color: 'white' }}>Hours Per Week:</Text>
-                    </Text>
+                    <ScalableText style={{ marginTop: '14%' }}>
+                      <ScalableText style={{ fontSize: wid * 18, fontFamily: 'WSR', color: 'white' }}>Hours Per Week:</ScalableText>
+                    </ScalableText>
                   </View>
                   <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                    <Text style={{ marginTop: '0%' }}>
-                      <Text style={{ fontSize: wid * 50, fontFamily: 'WSR', color: 'white' }}>{this.state.hoursneeded}</Text>
-                    </Text>
+                    <ScalableText style={{ marginTop: '0%' }}>
+                      <ScalableText style={{ fontSize: wid * 50, fontFamily: 'WSR', color: 'white' }}>{this.state.hoursneeded}</ScalableText>
+                    </ScalableText>
                   </View>
                 </View>
               </View>
@@ -166,10 +168,10 @@ export default class Login extends React.Component {
             <View style={{ flex: 15, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
               <View style={styles.topcard}>
                 <View style={{ flex: 1, alignItems: 'center', maxWidth: '90%' }}>
-                  <Text style={{ fontSize: wid * 25, fontFamily: 'WSB', color: 'white', flex: 1, marginTop: '5%' }}>Teacher Comments: </Text>
+                  <ScalableText style={{ fontSize: wid * 25, fontFamily: 'WSB', color: 'white', flex: 1, marginTop: '5%' }}>Teacher Comments: </ScalableText>
                   <View style={{ flex: 4 }}>
                     <ScrollView style={{ width: '100%', flex: 4 }} bounces={false}>
-                      <Text style={{ fontSize: wid * 25, fontFamily: 'WSR', color: 'white' }}>{comments}</Text>
+                      <ScalableText style={{ fontSize: wid * 25, fontFamily: 'WSR', color: 'white' }}>{comments}</ScalableText>
                     </ScrollView>
                   </View>
                 </View>
