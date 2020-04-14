@@ -127,7 +127,7 @@ export default class Login extends React.Component {
                         this.setState({ date: date });
                         var a = moment();
                         var b = moment(date, 'MM-DD-YYYY')
-                        const mins = hours * 60 + minutes;
+                        const mins = global.totalhrs * 60 + global.totalmins;
                         if (mins > 3000) {
                           this.setState({ hoursneeded: 'Done!' })
                         }
