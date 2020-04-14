@@ -10,7 +10,9 @@ const wid = entireScreenWidth / 380;
 export default class Mainpage extends React.Component {
   constructor(props) {
     super(props);
-
+    Text.defaultProps = Text.defaultProps || {};
+    // Ignore dynamic type scaling on iOS
+    Text.defaultProps.allowFontScaling = false; 
     this.state = {
       timer: null,
       minutes_Counter: '00',
@@ -261,7 +263,7 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   counterText: {
-    fontSize: entireScreenWidth * 50 / 380, textAlign: 'center',
+    fontSize: entireScreenWidth * 60 / 380, textAlign: 'center',
     color: 'white',
     fontFamily: 'Nova',
   }

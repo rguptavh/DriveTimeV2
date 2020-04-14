@@ -8,6 +8,9 @@ import moment from 'moment';
 export default class App extends React.Component {
   constructor() {
     super();
+    Text.defaultProps = Text.defaultProps || {};
+    // Ignore dynamic type scaling on iOS
+    Text.defaultProps.allowFontScaling = false; 
     this.state = {
       data: global.drives,
       stickyHeaderIndices: [],

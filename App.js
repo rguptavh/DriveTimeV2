@@ -1,6 +1,6 @@
 // App.js
 import React from 'react';
-import { StyleSheet, AsyncStorage, BackHandler } from 'react-native';
+import { StyleSheet, AsyncStorage, BackHandler, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack'
 import { createAppContainer } from 'react-navigation';
 import * as Font from 'expo-font';
@@ -19,6 +19,12 @@ export default class App extends React.Component {
   state = {
     assetsLoaded: false,
   };
+  constructor() {
+    super();
+    Text.defaultProps = Text.defaultProps || {};
+    // Ignore dynamic type scaling on iOS
+    Text.defaultProps.allowFontScaling = false; 
+ }
 
   async componentDidMount() {
     global.logging = false;
