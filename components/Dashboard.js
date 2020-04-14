@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image,
 import moment from 'moment';
 import * as Progress from 'react-native-progress';
 import DatePicker from 'react-native-datepicker'
+import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 const hours = 15;
@@ -48,10 +49,10 @@ export default class Login extends React.Component {
               <View style={styles.topcard}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', maxWidth: '90%' }}>
                   <Text style={{ marginTop: '10%' }}>
-                    <Text style={{ fontSize: wid * 55, fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
-                    <Text style={{ fontSize: wid * 30, fontFamily: 'WSR', color: 'white' }}>hours</Text>
-                    <Text style={{ fontSize: wid * 55, fontFamily: 'WSR', color: 'white' }}> {minutes}</Text>
-                    <Text style={{ fontSize: wid * 30, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
+                    <Text style={{ fontSize: RFValue(55), fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
+                    <Text style={{ fontSize: RFValue(25), fontFamily: 'WSR', color: 'white' }}>hours</Text>
+                    <Text style={{ fontSize: RFValue(55), fontFamily: 'WSR', color: 'white' }}> {minutes}</Text>
+                    <Text style={{ fontSize: RFValue(25), fontFamily: 'WSR', color: 'white' }}>minutes</Text>
                   </Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
