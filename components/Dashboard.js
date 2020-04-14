@@ -21,18 +21,76 @@ export default class Login extends React.Component {
     super();
     Text.defaultProps = Text.defaultProps || {};
     // Ignore dynamic type scaling on iOS
-    Text.defaultProps.allowFontScaling = false; 
- }
+    Text.defaultProps.allowFontScaling = false;
+  }
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({ progress1: (global.totalhrs * 60 + global.totalmins) / 2400 });
-      this.setState({ progress2: (global.nighthrs * 60 + global.nightmins) / 600 });
-    }, 500);
 
+    try {
+      //AsyncStorage.removeItem('username');  // Clear username for testing
+
+
+      if (global.drives == null) {
+        let times = setInterval(() => {
+          // console.log(global.logging)
+          if (global.drives != null) {
+            this.checkdate();
+            setTimeout(() => {
+              this.setState({ progress1: (global.totalhrs * 60 + global.totalmins) / 2400 });
+              this.setState({ progress2: (global.nighthrs * 60 + global.nightmins) / 600 });
+            }, 500);
+
+            clearInterval(this.state.times);
+          }
+
+        }, 100);
+        this.setState({ times });
+      }
+      else {
+        this.checkdate();
+        setTimeout(() => {
+          this.setState({ progress1: (global.totalhrs * 60 + global.totalmins) / 2400 });
+          this.setState({ progress2: (global.nighthrs * 60 + global.nightmins) / 600 });
+        }, 500);
+      }
+      return true;
+    }
+    catch (exception) {
+      return false;
+    }
+  }
+  async checkdate() {
+    dat = await AsyncStorage.getItem('date')
+    if (dat != null) {
+      console.log(dat);
+      this.setState({ date: dat });
+      var a = moment();
+      var b = moment(dat, 'MM-DD-YYYY')
+      const mins = global.totalhrs * 60 + global.totalmins;
+      if (mins > 3000) {
+        this.setState({ hoursneeded: 'Done!' })
+      }
+      else {
+        const hrs = b.diff(a, 'days') + 1
+        if (hrs < 7) {
+          var needed = (3000 - mins) / 60;
+          needed = Math.round((needed + Number.EPSILON) * 100) / 100
+          this.setState({ hoursneeded: String(needed) })
+        }
+
+        else {
+          console.log(hrs)
+          const weeks = Math.round(hrs / 7)
+          var needed = (2400 - mins) / weeks / 60;
+          needed = Math.round((needed + Number.EPSILON) * 100) / 100
+          this.setState({ hoursneeded: String(needed) })
+        }
+      }
+      
+    }
   }
   static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
-    
+
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
     const entireScreenWidth = Dimensions.get('window').width;
@@ -53,14 +111,14 @@ export default class Login extends React.Component {
       <View style={styles.container}>
 
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
-          <View style={{ flex: 16, width: '100%', alignItems: 'center', marginTop: entireScreenHeight*0.05, justifyContent: 'center' }}>
+          <View style={{ flex: 16, width: '100%', alignItems: 'center', marginTop: entireScreenHeight * 0.05, justifyContent: 'center' }}>
             <View style={styles.topcard}>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', maxWidth: '90%' }}>
                 <Text style={{ marginTop: '10%' }}>
-                  <Text style={{ fontSize: 50*wid, fontFamily: 'WSR', color: 'white' }}>{global.totalhrs}</Text>
-                  <Text style={{ fontSize: 25*wid, fontFamily: 'WSR', color: 'white' }}>hours</Text>
-                  <Text style={{ fontSize: 50*wid, fontFamily: 'WSR', color: 'white' }}>{global.totalmins}</Text>
-                  <Text style={{ fontSize: 25*wid, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
+                  <Text style={{ fontSize: 50 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalhrs}</Text>
+                  <Text style={{ fontSize: 25 * wid, fontFamily: 'WSR', color: 'white' }}>hours</Text>
+                  <Text style={{ fontSize: 50 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalmins}</Text>
+                  <Text style={{ fontSize: 25 * wid, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
                 </Text>
               </View>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
@@ -103,7 +161,7 @@ export default class Login extends React.Component {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: '100%' }}>
                   <View style={{ width: '80%', height: '80%', borderRadius: 10, backgroundColor: '#D0D0D0', borderColor: 'white', borderWidth: 2, marginBottom: '20%', alignItems: 'center', justifyContent: 'center' }}>
                     <DatePicker
-                      style={{ width: 120 * wid, marginBottom: 10 * ree, }}
+                      style={{ width: 120 * wid, marginBottom: 10 * ree, backgroundColor: 'transparent' }}
                       date={this.state.date}
                       mode="date"
                       minDate={moment().add(1, 'days').format("MM-DD-YYYY")}
@@ -112,6 +170,7 @@ export default class Login extends React.Component {
                       cancelBtnText="Cancel"
                       showIcon={false}
                       placeholder=' '
+                      disabled={global.drives == null}
 
                       customStyles={{
 
@@ -125,6 +184,7 @@ export default class Login extends React.Component {
                       }}
                       onDateChange={(date) => {
                         this.setState({ date: date });
+                        AsyncStorage.setItem('date', date);
                         var a = moment();
                         var b = moment(date, 'MM-DD-YYYY')
                         const mins = global.totalhrs * 60 + global.totalmins;
