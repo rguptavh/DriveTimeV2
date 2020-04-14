@@ -48,9 +48,9 @@ export default class Login extends React.Component {
                 <View style={styles.topcard}>
                   <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', maxWidth: '90%' }}>
                     <Text style={{ marginTop: '10%' }}>
-                      <Text style={{ fontSize: wid * 60, fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
+                      <Text style={{ fontSize: wid * 55, fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
                       <Text style={{ fontSize: wid * 30, fontFamily: 'WSR', color: 'white' }}>hours</Text>
-                      <Text style={{ fontSize: wid * 60, fontFamily: 'WSR', color: 'white' }}> {minutes}</Text>
+                      <Text style={{ fontSize: wid * 55, fontFamily: 'WSR', color: 'white' }}> {minutes}</Text>
                       <Text style={{ fontSize: wid * 30, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
                     </Text>
                   </View>
@@ -94,7 +94,7 @@ export default class Login extends React.Component {
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: '100%' }}>
                       <View style={{ width: '80%', height: '80%', borderRadius: 10, backgroundColor: '#D0D0D0', borderColor: 'white', borderWidth: 2, marginBottom: '20%', alignItems: 'center', justifyContent: 'center' }}>
                         <DatePicker
-                          style={{ width: 120 * wid, marginBottom: 5 * ree, }}
+                          style={{ width: 120 * wid, marginBottom: 10 * ree, }}
                           date={this.state.date}
                           mode="date"
                           minDate={moment().add(1, 'days').format("MM-DD-YYYY")}
