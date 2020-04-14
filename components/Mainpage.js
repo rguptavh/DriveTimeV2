@@ -34,7 +34,7 @@ export default class Mainpage extends React.Component {
       console.log(this.state.loading)
       if (global.drives == null) {
         let times = setInterval(() => {
-          console.log(global.logging)
+         // console.log(global.logging)
           if (global.drives != null) {
             this.setState({ loading: false });
             clearInterval(this.state.times);

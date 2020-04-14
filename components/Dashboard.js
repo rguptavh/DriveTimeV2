@@ -7,9 +7,7 @@ import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 
 
 
-const hours = 15;
-const minutes = 7;
-const comments = 'Drive More';
+
 
 export default class Login extends React.Component {
   state = {
@@ -27,8 +25,8 @@ export default class Login extends React.Component {
  }
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ progress1: (hours * 60 + minutes) / 2400 });
-      this.setState({ progress2: (hours * 60 + minutes) / 600 });
+      this.setState({ progress1: (global.totalhrs * 60 + global.totalmins) / 2400 });
+      this.setState({ progress2: (global.nighthrs * 60 + global.nightmins) / 600 });
     }, 500);
 
   }
@@ -59,10 +57,10 @@ export default class Login extends React.Component {
             <View style={styles.topcard}>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', maxWidth: '90%' }}>
                 <Text style={{ marginTop: '10%' }}>
-                  <Text style={{ fontSize: 55*wid, fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
-                  <Text style={{ fontSize: 30, fontFamily: 'WSR', color: 'white' }}>hours</Text>
-                  <Text style={{ fontSize: 55, fontFamily: 'WSR', color: 'white' }}>{minutes}</Text>
-                  <Text style={{ fontSize: 30, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
+                  <Text style={{ fontSize: 50*wid, fontFamily: 'WSR', color: 'white' }}>{global.totalhrs}</Text>
+                  <Text style={{ fontSize: 25*wid, fontFamily: 'WSR', color: 'white' }}>hours</Text>
+                  <Text style={{ fontSize: 50*wid, fontFamily: 'WSR', color: 'white' }}>{global.totalmins}</Text>
+                  <Text style={{ fontSize: 25*wid, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
                 </Text>
               </View>
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
@@ -75,9 +73,9 @@ export default class Login extends React.Component {
               <View style={{ height: '100%', flex: 2 }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                   <Text style={{ marginTop: '5%' }}>
-                    <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{hours}</Text>
+                    <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{global.nighthrs}</Text>
                     <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>hours</Text>
-                    <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{minutes}</Text>
+                    <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{global.nightmins}</Text>
                     <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
                   </Text>
                 </View>
@@ -179,7 +177,7 @@ export default class Login extends React.Component {
                 <Text style={{ fontSize: wid * 25, fontFamily: 'WSB', color: 'white', flex: 1, marginTop: '5%' }}>Teacher Comments: </Text>
                 <View style={{ flex: 4 }}>
                   <ScrollView style={{ width: '100%', flex: 4 }} bounces={false}>
-                    <Text style={{ fontSize: wid * 25, fontFamily: 'WSR', color: 'white' }}>{comments}</Text>
+                    <Text style={{ fontSize: wid * 25, fontFamily: 'WSR', color: 'white' }}>{global.comments}</Text>
                   </ScrollView>
                 </View>
               </View>

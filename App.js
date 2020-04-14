@@ -23,8 +23,8 @@ export default class App extends React.Component {
     super();
     Text.defaultProps = Text.defaultProps || {};
     // Ignore dynamic type scaling on iOS
-    Text.defaultProps.allowFontScaling = false; 
- }
+    Text.defaultProps.allowFontScaling = false;
+  }
 
   async componentDidMount() {
     global.logging = false;
@@ -62,58 +62,84 @@ export default class App extends React.Component {
       Http.onreadystatechange = (e) => {
         ok = Http.responseText;
         if (Http.readyState == 4) {
-          console.log(String(ok));
+          console.log(ok);
           var response = String(ok).split(",");
-          var data = [];
-          for (var x = 0; x < (response.length - 1) / 7; x++) {
-            data.push({
-              description: response[7 * x + 1],
-              tod: response[7 * x + 2],
-              date: response[7 * x + 3],
-              time: response[7 * x + 4],
-              minutes: response[7 * x + 5],
-              road: response[7 * x + 6],
-              weather: response[7 * x + 7],
-              id: "" + x,
-              header: false
-            }
-            );
-          }
-          console.log(JSON.stringify(data))
-          data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
-          const map = new Map();
-          let result = [];
-          for (const item of data) {
-            if (!map.has(item.date)) {
-              map.set(item.date, true);    // set any value to Map
-              result.push(item.date);
-            }
-          }
-          console.log(result)
-          const length = data.length;
-          const length2 = result.length;
-          for (i = 0; i < data.length; i++) {
-            if (result.includes(data[i].date)) {
-              result.shift();
-              const he = {
-                header: true,
-                description: 'HEADER',
-                tod: 'HEADER',
-                time: 'HEADER',
-                minutes: 'HEADER',
-                road: 'HEADER',
-                weather: 'HEADER',
-                id: "" + (length + (length2 - result.length)),
-                date: data[i].date
+          if (response[0] == 'true') {
+            var data = [];
+            global.comments = response[1];
+            global.totalhrs = Math.floor(parseFloat(response[2]));
+            global.totalmins = Math.round((parseFloat(response[2]) - global.totalhrs) * 60);
+            global.day = response[3];
+            global.nighthrs = Math.floor(parseFloat(response[4]));
+            global.nightmins = Math.round((parseFloat(response[4]) - global.nighthrs) * 60);
+            global.local = response[5];
+            global.highway = response[6];
+            global.tollway = response[7];
+            global.urban = response[8];
+            global.rural = response[9];
+            global.plot = response[10];
+            global.sunny = response[11];
+            global.rain = response[12];
+            global.snow = response[13];
+            global.fog = response[14];
+            global.hail = response[15];
+            global.sleet = response[16];
+            global.frain = response[17];
+            response.splice(1, 17);
+            console.log(response.toString());
+
+            for (var x = 0; x < (response.length - 1) / 7; x++) {
+              data.push({
+                description: response[7 * x + 1],
+                tod: response[7 * x + 2],
+                date: response[7 * x + 3],
+                time: response[7 * x + 4],
+                minutes: response[7 * x + 5],
+                road: response[7 * x + 6],
+                weather: response[7 * x + 7],
+                id: "" + x,
+                header: false
               }
-              data.splice(i, 0, he);
+              );
             }
+            console.log(JSON.stringify(data))
+            data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
+            const map = new Map();
+            let result = [];
+            for (const item of data) {
+              if (!map.has(item.date)) {
+                map.set(item.date, true);    // set any value to Map
+                result.push(item.date);
+              }
+            }
+            console.log(result)
+            const length = data.length;
+            const length2 = result.length;
+            for (i = 0; i < data.length; i++) {
+              if (result.includes(data[i].date)) {
+                result.shift();
+                const he = {
+                  header: true,
+                  description: 'HEADER',
+                  tod: 'HEADER',
+                  time: 'HEADER',
+                  minutes: 'HEADER',
+                  road: 'HEADER',
+                  weather: 'HEADER',
+                  id: "" + (length + (length2 - result.length)),
+                  date: data[i].date
+                }
+                data.splice(i, 0, he);
+              }
+            }
+            global.drives = data;
+            global.logging = false;
+
           }
-          console.log(JSON.stringify(data))
-          console.log(ok)
-          global.drives = data;
-          global.logging = false;
-          
+
+          else {
+            alert("Data failed to load from server");
+          }
         }
       }
     }
@@ -128,7 +154,6 @@ export default class App extends React.Component {
   handleBackButton() {
     return true;
   }
-
   render() {
 
     if (this.state.assetsLoaded) {
