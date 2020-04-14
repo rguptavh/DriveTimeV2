@@ -160,7 +160,7 @@ export default class Login extends React.Component {
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', justifyContent: 'center', width: '100%' }}>
                   <View style={{ width: '80%', height: '80%', borderRadius: 10, backgroundColor: '#D0D0D0', borderColor: 'white', borderWidth: 2, marginBottom: '20%', alignItems: 'center', justifyContent: 'center' }}>
-                    <DatePicker
+                    {global.drives != null && <DatePicker
                       style={{ width: 120 * wid, marginBottom: 10 * ree, backgroundColor: 'transparent' }}
                       date={this.state.date}
                       mode="date"
@@ -170,11 +170,10 @@ export default class Login extends React.Component {
                       cancelBtnText="Cancel"
                       showIcon={false}
                       placeholder=' '
-                      disabled={global.drives == null}
 
                       customStyles={{
 
-                        dateInput: { borderWidth: 0 },
+                        dateInput: { borderWidth: 0, backgroundColor: 'transparent' },
                         dateText: {
                           fontSize: 20 * wid,
                           color: 'white',
@@ -210,7 +209,7 @@ export default class Login extends React.Component {
                       }
                       }
 
-                    />
+                    />}
                   </View>
                 </View>
               </View>
