@@ -62,19 +62,21 @@ export default class Login extends React.Component {
     dat = await AsyncStorage.getItem('date')
     var d1 = moment(dat, 'MM-DD-YYYY')
     var d2 = moment();
+    var total = global.totalhrs * 60 + global.totalmins;
+    var night = global.nighthrs * 60 + global.nightmins;
+    var day = total - night;
     if (dat != null && d1.isSameOrAfter(d2, 'day')) {
       console.log(dat);
       this.setState({ date: dat });
       var a = moment();
       var b = moment(dat, 'MM-DD-YYYY')
-      const mins = global.totalhrs * 60 + global.totalmins;
-      if (mins > 3000) {
+      if (night > 600 && day > 2400) {
         this.setState({ hoursneeded: 'Done!' })
       }
       else {
         const hrs = b.diff(a, 'days') + 1
         if (hrs < 7) {
-          var needed = (3000 - mins) / 60;
+          var needed = (600 - Math.min(night, 600) + 2400 - Math.min(day, 2400)) / 60;
           needed = Math.round((needed + Number.EPSILON) * 100) / 100
           this.setState({ hoursneeded: String(needed) })
         }
@@ -82,7 +84,7 @@ export default class Login extends React.Component {
         else {
           console.log(hrs)
           const weeks = Math.round(hrs / 7)
-          var needed = (2400 - mins) / weeks / 60;
+          var needed = (600 - Math.min(night, 600) + 2400 - Math.min(day, 2400)) / weeks / 60;
           needed = Math.round((needed + Number.EPSILON) * 100) / 100
           this.setState({ hoursneeded: String(needed) })
         }
@@ -115,10 +117,10 @@ export default class Login extends React.Component {
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
           <View style={{ flex: 16, width: '100%', alignItems: 'center', marginTop: entireScreenHeight * 0.05, justifyContent: 'center' }}>
             <View style={styles.topcard}>
-              <TouchableOpacity style = {{flex: 1, width: '100%'}} onPress = {() => {
-                Alert.alert("Detailed Drive Data","Total Hours: " + (global.totalhrs+global.totalmins/60).toFixed(3) + "\n"+"Night Hours: " + (global.nighthrs+global.nightmins/60).toFixed(3) + "\n"+"Local Road Hours: " + global.local.toFixed(3) + "\n" + "Highway Hours: " + global.highway.toFixed(3) + "\n" + "Tollway Hours: " + global.tollway.toFixed(3) + "\n" + "Urban Hours: " + global.urban.toFixed(3) + "\n" + "Rural Hours: " + global.rural.toFixed(3) + "\n" +
-                "Parking Lot Hours: " + global.plot.toFixed(3) + "\n" + "Sunny Hours: " + global.sunny.toFixed(3) + "\n" + "Rain Hours: " + global.rain.toFixed(3) + "\n" + "Snow Hours: " + global.snow.toFixed(3) + "\n" + "Fog Hours: " + global.fog.toFixed(3) + "\n" + "Hail Hours: " + global.hail.toFixed(3) + "\n" + "Sleet Hours: " + global.sleet.toFixed(3) + "\n" +
-                "Freezing Rain Hours: " + global.frain.toFixed(3)
+              <TouchableOpacity style={{ flex: 1, width: '100%' }} onPress={() => {
+                Alert.alert("Detailed Drive Data", "Total Hours: " + (global.totalhrs + global.totalmins / 60).toFixed(3) + "\n" + "Day Hours: " + ((global.totalhrs + global.totalmins / 60) - (global.nighthrs + global.nightmins / 60)).toFixed(3) + "\n" + "Night Hours: " + (global.nighthrs + global.nightmins / 60).toFixed(3) + "\n" + "Local Road Hours: " + global.local.toFixed(3) + "\n" + "Highway Hours: " + global.highway.toFixed(3) + "\n" + "Tollway Hours: " + global.tollway.toFixed(3) + "\n" + "Urban Hours: " + global.urban.toFixed(3) + "\n" + "Rural Hours: " + global.rural.toFixed(3) + "\n" +
+                  "Parking Lot Hours: " + global.plot.toFixed(3) + "\n" + "Sunny Hours: " + global.sunny.toFixed(3) + "\n" + "Rain Hours: " + global.rain.toFixed(3) + "\n" + "Snow Hours: " + global.snow.toFixed(3) + "\n" + "Fog Hours: " + global.fog.toFixed(3) + "\n" + "Hail Hours: " + global.hail.toFixed(3) + "\n" + "Sleet Hours: " + global.sleet.toFixed(3) + "\n" +
+                  "Freezing Rain Hours: " + global.frain.toFixed(3)
                 )
               }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', width: '90%' }}>
@@ -195,14 +197,16 @@ export default class Login extends React.Component {
                         AsyncStorage.setItem('date', date);
                         var a = moment();
                         var b = moment(date, 'MM-DD-YYYY')
-                        const mins = global.totalhrs * 60 + global.totalmins;
-                        if (mins > 3000) {
+                        var total = global.totalhrs * 60 + global.totalmins;
+                        var night = global.nighthrs * 60 + global.nightmins;
+                        var day = total - night;
+                        if (night > 600 && day > 2400) {
                           this.setState({ hoursneeded: 'Done!' })
                         }
                         else {
                           const hrs = b.diff(a, 'days') + 1
                           if (hrs < 7) {
-                            var needed = (3000 - mins) / 60;
+                            var needed = (600 - Math.min(night, 600) + 2400 - Math.min(day, 2400)) / 60;
                             needed = Math.round((needed + Number.EPSILON) * 100) / 100
                             this.setState({ hoursneeded: String(needed) })
                           }
@@ -210,7 +214,7 @@ export default class Login extends React.Component {
                           else {
                             console.log(hrs)
                             const weeks = Math.round(hrs / 7)
-                            var needed = (2400 - mins) / weeks / 60;
+                            var needed = (600 - Math.min(night, 600) + 2400 - Math.min(day, 2400)) / weeks / 60;
                             needed = Math.round((needed + Number.EPSILON) * 100) / 100
                             this.setState({ hoursneeded: String(needed) })
                           }
