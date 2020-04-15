@@ -81,40 +81,45 @@ export default class Login extends React.Component {
         if (minutes == '0') {
           alert("Can't log 0 minutes")
         }
-        else { 
-          global.totalhrs = global.totalhrs + Math.floor(minutes/60);
-          global.totalmins = global.totalmins + (minutes%60);
-          if(night == 'Night'){
-            global.nighthrs += Math.floor(minutes/60);
-            global.nightmins += (minutes%60);
-          }
-          if(road=='Local')
-            global.local += (minutes/60);
-          else if(road=='Highway')
-            global.highway += (minutes/60);
-          else if(road=='Tollway')
-            global.tollway += (minutes/60);
-          else if(road=='Urban')
-            global.urban += (minutes/60);
-          else if(road=='Rural')
-            global.rural += (minutes/60);
-          else
-            global.plot += (minutes/60);
+        else {
+          var temp = global.totalhrs + global.totalmins / 60;
+          temp += minutes / 60;
+          global.totalhrs = Math.floor(parseFloat(temp));
+          global.totalmins = Math.round((parseFloat(temp) - global.totalhrs) * 60);
 
-          if(weather=='Sunny')
-            global.sunny += (minutes/60);
-          else if(weather == 'Rain')
-            global.rain += (minutes/60);
-          else if(weather == 'Snow')
-            global.snow += (minutes/60);
-          else if(weather == 'Fog')
-            global.fog += (minutes/60);
-          else if(weather == 'Hail')
-            global.hail += (minutes/60);
-          else if(weather == 'Sleet')
-            global.sleet += (minutes/60);
+          if (night == 'Night') {
+            temp = global.nighthrs + global.nightmins / 60;
+            temp += minutes / 60
+            global.nighthrs = Math.floor(parseFloat(temp));
+            global.nightmins = Math.round((parseFloat(temp) - global.nighthrs) * 60);
+          }
+          if (road == 'Local')
+            global.local += (minutes / 60);
+          else if (road == 'Highway')
+            global.highway += (minutes / 60);
+          else if (road == 'Tollway')
+            global.tollway += (minutes / 60);
+          else if (road == 'Urban')
+            global.urban += (minutes / 60);
+          else if (road == 'Rural')
+            global.rural += (minutes / 60);
           else
-            global.frain += (minutes/60);
+            global.plot += (minutes / 60);
+
+          if (weather == 'Sunny')
+            global.sunny += (minutes / 60);
+          else if (weather == 'Rain')
+            global.rain += (minutes / 60);
+          else if (weather == 'Snow')
+            global.snow += (minutes / 60);
+          else if (weather == 'Fog')
+            global.fog += (minutes / 60);
+          else if (weather == 'Hail')
+            global.hail += (minutes / 60);
+          else if (weather == 'Sleet')
+            global.sleet += (minutes / 60);
+          else
+            global.frain += (minutes / 60);
 
           this.setState({ loading: true });
           const Http = new XMLHttpRequest();
@@ -128,67 +133,67 @@ export default class Login extends React.Component {
             ok = Http.responseText;
             if (Http.readyState == 4) {
               console.log(String(ok));
-          var response = String(ok).split(",");
-          console.log(response.join(","))
-          if (response[0] == "true") {
-            var data = [];
-            for (var x = 0; x < (response.length - 1) / 7; x++) {
-              data.push({
-                description: response[7 * x + 1],
-                tod: response[7 * x + 2],
-                date: response[7 * x + 3],
-                time: response[7 * x + 4],
-                minutes: response[7 * x + 5],
-                road: response[7 * x + 6],
-                weather: response[7 * x + 7],
-                id: "" + x,
-                header: false
-              }
-              )
-            }
-            console.log(JSON.stringify(data))
-            data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
-            const map = new Map();
-            let result = [];
-            for (const item of data) {
-              if (!map.has(item.date)) {
-                map.set(item.date, true);    // set any value to Map
-                result.push(item.date);
-              }
-            }
-            const length = data.length;
-            const length2 = result.length;
-            for (i = 0; i < data.length; i++) {
-              if (result.includes(data[i].date)) {
-                result.shift();
-                console.log(result)
-                const he = {
-                  header: true,
-                  description: 'HEADER',
-                  tod: 'HEADER',
-                  time: 'HEADER',
-                  minutes: 'HEADER',
-                  road: 'HEADER',
-                  weather: 'HEADER',
-                  id: "" + (length + (length2 - result.length)),
-                  date: data[i].date
+              var response = String(ok).split(",");
+              console.log(response.join(","))
+              if (response[0] == "true") {
+                var data = [];
+                for (var x = 0; x < (response.length - 1) / 7; x++) {
+                  data.push({
+                    description: response[7 * x + 1],
+                    tod: response[7 * x + 2],
+                    date: response[7 * x + 3],
+                    time: response[7 * x + 4],
+                    minutes: response[7 * x + 5],
+                    road: response[7 * x + 6],
+                    weather: response[7 * x + 7],
+                    id: "" + x,
+                    header: false
+                  }
+                  )
                 }
-                data.splice(i, 0, he);
+                console.log(JSON.stringify(data))
+                data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
+                const map = new Map();
+                let result = [];
+                for (const item of data) {
+                  if (!map.has(item.date)) {
+                    map.set(item.date, true);    // set any value to Map
+                    result.push(item.date);
+                  }
+                }
+                const length = data.length;
+                const length2 = result.length;
+                for (i = 0; i < data.length; i++) {
+                  if (result.includes(data[i].date)) {
+                    result.shift();
+                    console.log(result)
+                    const he = {
+                      header: true,
+                      description: 'HEADER',
+                      tod: 'HEADER',
+                      time: 'HEADER',
+                      minutes: 'HEADER',
+                      road: 'HEADER',
+                      weather: 'HEADER',
+                      id: "" + (length + (length2 - result.length)),
+                      date: data[i].date
+                    }
+                    data.splice(i, 0, he);
+                  }
+                }
+                global.drives = data;
+                console.log(JSON.stringify(data))
+                this.props.navigation.navigate('Main')
+
               }
-            }
-            global.drives = data;
-            console.log(JSON.stringify(data))
-            this.props.navigation.navigate('Main')
+              else if (response[0] == "false") {
+                alert("Failed login");
+              }
+              else {
 
-          }
-          else if (response[0] == "false") {
-            alert("Failed login");
-          }
-          else {
-
-            alert("Server error");
-          }
-          this.setState({ loading: false });
+                alert("Server error");
+              }
+              this.setState({ loading: false });
             }
           }
         }

@@ -56,11 +56,16 @@ export default class App extends React.Component {
           var road = item.road;
           var night = item.tod;
           var weather = item.weather;
-          global.totalhrs = global.totalhrs - Math.floor(minutes/60);
-          global.totalmins = global.totalmins - (minutes%60);
-          if(night == 'Night'){
-            global.nighthrs -= Math.floor(minutes/60);
-            global.nightmins -= (minutes%60);
+          var temp = global.totalhrs + global.totalmins / 60;
+          temp -= minutes / 60;
+          global.totalhrs = Math.floor(parseFloat(temp));
+          global.totalmins = Math.round((parseFloat(temp) - global.totalhrs) * 60);
+
+          if (night == 'Night') {
+            temp = global.nighthrs + global.nightmins / 60;
+            temp -= minutes / 60
+            global.nighthrs = Math.floor(parseFloat(temp));
+            global.nightmins = Math.round((parseFloat(temp) - global.nighthrs) * 60);
           }
           if(road=='Local')
             global.local -= (minutes/60);
