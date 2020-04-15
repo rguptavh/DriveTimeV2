@@ -30,7 +30,7 @@ export default class Mainpage extends React.Component {
 
   componentDidMount() {
     try {
-      AsyncStorage.removeItem('username');  // Clear username for testing
+     // AsyncStorage.removeItem('username');  // Clear username for testing
       console.log(this.state.loading)
       if (global.drives == null) {
         let times = setInterval(() => {
