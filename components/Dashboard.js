@@ -48,7 +48,7 @@ export default class Login extends React.Component {
       else {
         this.checkdate();
         setTimeout(() => {
-          this.setState({ progress1: (global.totalhrs * 60 + global.totalmins) / 2400 });
+          this.setState({ progress1: (global.totalhrs * 60 + global.totalmins) / 3000 });
           this.setState({ progress2: (global.nighthrs * 60 + global.nightmins) / 600 });
         }, 500);
       }
