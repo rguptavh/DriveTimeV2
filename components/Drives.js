@@ -1,18 +1,124 @@
 import React from "react";
-import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image } from "react-native";
+import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image, Alert } from "react-native";
 import { Text, ListItem, Left, Body, Icon, Right, Title } from "native-base";
+import Swipeout from 'react-native-swipeout';
+import moment from 'moment';
 
 
 export default class App extends React.Component {
   constructor() {
     super();
+    Text.defaultProps = Text.defaultProps || {};
+    // Ignore dynamic type scaling on iOS
+    Text.defaultProps.allowFontScaling = false; 
     this.state = {
       data: global.drives,
-      stickyHeaderIndices: []
+      stickyHeaderIndices: [],
+      isSwiping: false
     };
   }
+  deleteNote(item) {
+    Alert.alert(
+      "Delete Drive",
+      "Are you sure you want to delete your drive?",
+      [
+        {
+          text: "No"
+        },
+        { text: "Yes", onPress: () => {
+          var temp = this.state.data;
+          for (i = 0; i<temp.length;i++){
+            if(temp[i].id == item.id){
+              temp.splice(i,1);
+              break;
+            }
+          }
+          let result = [];
+          const map = new Map();
+            for (const item of temp) {
+              if (!map.has(item.date) && !item.header) {
+                map.set(item.date, true);    // set any value to Map
+                result.push(item.date);
+              }
+            }
+            for (i = 0; i<temp.length; i++){
+              if (temp[i].header && !result.includes(temp[i].date)){
+                temp.splice(i,1);
+                break;
+              }
+            }
+            global.drives = temp;
+          this.setState({data: temp});
+          var date = String(item.date);
+          var time = String(item.time);
+          var minutes = parseInt(String(item.minutes));
+          var description = String(item.description).trim().replace(/\n/g, " ");
+          var road = item.road;
+          var night = item.tod;
+          var weather = item.weather;
+          global.totalhrs = global.totalhrs - (minutes/60);
+          global.totalmins = global.totalmins - (minutes%60);
+          if(night == 'Night'){
+            global.nighthrs -= (minutes/60);
+            global.nightmins -= (minutes%60);
+          }
+          if(road=='Local')
+            global.local -= (minutes/60).toFixed(3);
+          else if(road=='Highway')
+            global.highway -= (minutes/60).toFixed(3);
+          else if(road=='Tollway')
+            global.tollway -= (minutes/60).toFixed(3);
+          else if(road=='Urban')
+            global.urban -= (minutes/60).toFixed(3);
+          else if(road=='Rural')
+            global.rural -= (minutes/60).toFixed(3);
+          else
+            global.plot -= (minutes/60).toFixed(3);
 
+          if(weather=='Sunny')
+            global.sunny -= (minutes/60).toFixed(3);
+          else if(weather == 'Rain')
+            global.rain -= (minutes/60).toFixed(3);
+          else if(weather == 'Snow')
+            global.snow -= (minutes/60).toFixed(3);
+          else if(weather == 'Fog')
+            global.fog -= (minutes/60).toFixed(3);
+          else if(weather == 'Hail')
+            global.hail -= (minutes/60).toFixed(3);
+          else if(weather == 'Sleet')
+            global.sleet -= (minutes/60).toFixed(3);
+          else
+            global.frain -= (minutes/60).toFixed(3);
+
+          const Http = new XMLHttpRequest();
+          const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
+          var data = "?username=" + global.uname + "&date=" + date + "&time=" + time + "&description=" + description + "&tod=" + night + "&time=" + time + "&minutes=" + minutes + "&road=" + road + "&weather=" + weather + "&action=delete";
+          console.log(data);
+          Http.open("GET", String(url + data));
+          Http.send();
+          var ok;
+          Http.onreadystatechange = (e) => {
+            ok = Http.responseText;
+            if (Http.readyState == 4) {
+              if (String(ok) == "Success") {
+                
+              }
+              else {
+                alert("Failed to delete on server, please try again later");
+              }
+        }
+       }}}
+      ],
+      { cancelable: false }
+    );
+  }
   _renderItem = ({ item }) => {
+    let swipeBtns = [{
+      text: 'Delete',
+      backgroundColor: 'red',
+      onPress: () => {this.deleteNote(item) }
+    },];
+
     if (item.header) {
 
       return (
@@ -20,7 +126,7 @@ export default class App extends React.Component {
         <ListItem itemDivider>
           <Body style={{ marginRight: 0, alignItems: 'center' }}>
             <Text style={{ fontWeight: "bold" }}>
-              {item.date}
+              {moment(item.date, 'MM-DD-YYYY').format('MMMM Do, YYYY')}
             </Text>
           </Body>
         </ListItem>
@@ -31,22 +137,28 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <ListItem style={{ marginLeft: 0 }} onPress={() =>
-          alert(item.time)
-        }>
-          <Body>
-            <Text style={{ flex: 1, fontFamily: 'WSB', color: 'white' }}>{item.minutes} minutes</Text>
-            <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.tod} - {item.road} - {item.weather}</Text>
-          </Body>
+        <Swipeout  right={swipeBtns} onOpen={() => this.setState({isSwiping: true})}
+        onClose={() => this.setState({isSwiping: false})} style = {{backgroundColor: 'transparent'}}>
+        <ListItem style={{ marginLeft: 0, backgroundColor: 'transparent' }}>
+          <TouchableOpacity style={{ width: '100%', flex: 1 }} onPress={() => alert(item.time)}>
+            <Body>
+              <Text style={{ flex: 1, fontFamily: 'WSB', color: 'white' }}>{item.minutes} minutes</Text>
+              <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.description}</Text>
+              <Text style={{ flex: 1, fontFamily: 'WSR', color: 'white' }}>{item.tod} - {item.road} - {item.weather} - {item.time}</Text>
+            </Body>
+          </TouchableOpacity>
         </ListItem>
+        </Swipeout >
       );
     }
   };
   static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
+    console.log(global.drives)
     const onPress = () => {
       this.props.navigation.navigate('Main')
     }
+    console.log(this.state.isSwiping)
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
     const entireScreenWidth = Dimensions.get('window').width;
@@ -108,7 +220,7 @@ export default class App extends React.Component {
             <View style={{ flex: 1, width: '90%', alignItems: 'center' }}>
               <Image source={require('../assets/pastdrives.png')} style={{
                 height: '100%',
-                width: '84%',
+                width: '100%',
                 marginTop: '10%',
                 flex: 1,
               }} resizeMode="contain"></Image></View>
@@ -117,6 +229,7 @@ export default class App extends React.Component {
                 data={this.state.data}
                 renderItem={this._renderItem}
                 keyExtractor={item => item.id}
+                scrollEnabled={!this.state.isSwiping}
               // stickyHeaderIndices={this.state.stickyHeaderIndices}
               />
             </View>
@@ -124,6 +237,7 @@ export default class App extends React.Component {
               width: '73%',
               flex: 1,
               paddingBottom: '2%',
+              paddingTop: '2%',
               justifyContent: 'center',
               alignItems: 'center'
 
@@ -131,7 +245,7 @@ export default class App extends React.Component {
               <TouchableOpacity
                 style={{
                   flex: 1,
-                  width: entireScreenHeight / 8 * 0.98,
+                  width: entireScreenHeight / 8 * 0.96,
                 }}
                 onPress={onPress}
                 disabled={this.state.loading}
