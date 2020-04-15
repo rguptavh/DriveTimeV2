@@ -85,7 +85,7 @@ export default class Login extends React.Component {
           global.totalhrs = global.totalhrs + Math.floor(minutes/60);
           global.totalmins = global.totalmins + (minutes%60);
           if(night == 'Night'){
-            global.nighthrs += (minutes/60);
+            global.nighthrs += Math.floor(minutes/60);
             global.nightmins += (minutes%60);
           }
           if(road=='Local')
