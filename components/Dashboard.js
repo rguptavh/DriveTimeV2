@@ -116,9 +116,9 @@ export default class Login extends React.Component {
           <View style={{ flex: 16, width: '100%', alignItems: 'center', marginTop: entireScreenHeight * 0.05, justifyContent: 'center' }}>
             <View style={styles.topcard}>
               <TouchableOpacity style = {{flex: 1, width: '100%'}} onPress = {() => {
-                Alert.alert("Detailed Drive Data","Total Hours: " + (global.totalhrs+global.totalmins/60).toFixed(3) + "\n"+"Night Hours: " + (global.nighthrs+global.nightmins/60).toFixed(3) + "\n"+"Local Road Hours: " + global.local + "\n" + "Highway Hours: " + global.highway + "\n" + "Tollway Hours: " + global.tollway + "\n" + "Urban Hours: " + global.urban + "\n" + "Rural Hours: " + global.rural + "\n" +
-                "Parking Lot Hours: " + global.plot + "\n" + "Sunny Hours: " + global.sunny + "\n" + "Rain Hours: " + global.rain + "\n" + "Snow Hours: " + global.snow + "\n" + "Fog Hours: " + global.fog + "\n" + "Hail Hours: " + global.hail + "\n" + "Sleet Hours: " + global.sleet + "\n" +
-                "Freezing Rain Hours: " + global.frain
+                Alert.alert("Detailed Drive Data","Total Hours: " + (global.totalhrs+global.totalmins/60).toFixed(3) + "\n"+"Night Hours: " + (global.nighthrs+global.nightmins/60).toFixed(3) + "\n"+"Local Road Hours: " + global.local.toFixed(3) + "\n" + "Highway Hours: " + global.highway.toFixed(3) + "\n" + "Tollway Hours: " + global.tollway.toFixed(3) + "\n" + "Urban Hours: " + global.urban.toFixed(3) + "\n" + "Rural Hours: " + global.rural.toFixed(3) + "\n" +
+                "Parking Lot Hours: " + global.plot.toFixed(3) + "\n" + "Sunny Hours: " + global.sunny.toFixed(3) + "\n" + "Rain Hours: " + global.rain.toFixed(3) + "\n" + "Snow Hours: " + global.snow.toFixed(3) + "\n" + "Fog Hours: " + global.fog.toFixed(3) + "\n" + "Hail Hours: " + global.hail.toFixed(3) + "\n" + "Sleet Hours: " + global.sleet.toFixed(3) + "\n" +
+                "Freezing Rain Hours: " + global.frain.toFixed(3)
                 )
               }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', width: '90%' }}>

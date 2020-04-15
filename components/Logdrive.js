@@ -89,32 +89,32 @@ export default class Login extends React.Component {
             global.nightmins += (minutes%60);
           }
           if(road=='Local')
-            global.local += (minutes/60).toFixed(3);
+            global.local += (minutes/60);
           else if(road=='Highway')
-            global.highway += (minutes/60).toFixed(3);
+            global.highway += (minutes/60);
           else if(road=='Tollway')
-            global.tollway += (minutes/60).toFixed(3);
+            global.tollway += (minutes/60);
           else if(road=='Urban')
-            global.urban += (minutes/60).toFixed(3);
+            global.urban += (minutes/60);
           else if(road=='Rural')
-            global.rural += (minutes/60).toFixed(3);
+            global.rural += (minutes/60);
           else
-            global.plot += (minutes/60).toFixed(3);
+            global.plot += (minutes/60);
 
           if(weather=='Sunny')
-            global.sunny += (minutes/60).toFixed(3);
+            global.sunny += (minutes/60);
           else if(weather == 'Rain')
-            global.rain += (minutes/60).toFixed(3);
+            global.rain += (minutes/60);
           else if(weather == 'Snow')
-            global.snow += (minutes/60).toFixed(3);
+            global.snow += (minutes/60);
           else if(weather == 'Fog')
-            global.fog += (minutes/60).toFixed(3);
+            global.fog += (minutes/60);
           else if(weather == 'Hail')
-            global.hail += (minutes/60).toFixed(3);
+            global.hail += (minutes/60);
           else if(weather == 'Sleet')
-            global.sleet += (minutes/60).toFixed(3);
+            global.sleet += (minutes/60);
           else
-            global.frain += (minutes/60).toFixed(3);
+            global.frain += (minutes/60);
 
           this.setState({ loading: true });
           const Http = new XMLHttpRequest();
