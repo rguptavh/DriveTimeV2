@@ -117,14 +117,14 @@ export default class Login extends React.Component {
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
           <View style={{ flex: 16, width: '100%', alignItems: 'center', marginTop: entireScreenHeight * 0.05, justifyContent: 'center' }}>
             <View style={styles.topcard}>
-              <TouchableOpacity style={{ flex: 1, width: '100%' }} onPress={() => {
+              <TouchableOpacity style={{ flex: 1, width: '100%', alignItems: 'center'}} onPress={() => {
                 Alert.alert("Detailed Drive Data", "Total Hours: " + (global.totalhrs + global.totalmins / 60).toFixed(3) + "\n" + "Day Hours: " + ((global.totalhrs + global.totalmins / 60) - (global.nighthrs + global.nightmins / 60)).toFixed(3) + "\n" + "Night Hours: " + (global.nighthrs + global.nightmins / 60).toFixed(3) + "\n" + "Local Road Hours: " + global.local.toFixed(3) + "\n" + "Highway Hours: " + global.highway.toFixed(3) + "\n" + "Tollway Hours: " + global.tollway.toFixed(3) + "\n" + "Urban Hours: " + global.urban.toFixed(3) + "\n" + "Rural Hours: " + global.rural.toFixed(3) + "\n" +
                   "Parking Lot Hours: " + global.plot.toFixed(3) + "\n" + "Sunny Hours: " + global.sunny.toFixed(3) + "\n" + "Rain Hours: " + global.rain.toFixed(3) + "\n" + "Snow Hours: " + global.snow.toFixed(3) + "\n" + "Fog Hours: " + global.fog.toFixed(3) + "\n" + "Hail Hours: " + global.hail.toFixed(3) + "\n" + "Sleet Hours: " + global.sleet.toFixed(3) + "\n" +
                   "Freezing Rain Hours: " + global.frain.toFixed(3)
                 )
               }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', width: '90%' }}>
-                  <Text style={{ marginTop: '10%' }}>
+                  <Text style={{ marginTop: '10%', alignItems: 'center', textAlign: 'center' }}>
                     <Text style={{ fontSize: 50 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalhrs}</Text>
                     <Text style={{ fontSize: 25 * wid, fontFamily: 'WSR', color: 'white' }}>hours</Text>
                     <Text style={{ fontSize: 50 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalmins}</Text>
