@@ -82,7 +82,7 @@ export default class Login extends React.Component {
           alert("Can't log 0 minutes")
         }
         else { 
-          global.totalhrs = global.totalhrs + (minutes/60);
+          global.totalhrs = global.totalhrs + Math.floor(minutes/60);
           global.totalmins = global.totalmins + (minutes%60);
           if(night == 'Night'){
             global.nighthrs += (minutes/60);

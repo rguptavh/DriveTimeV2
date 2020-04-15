@@ -56,7 +56,7 @@ export default class App extends React.Component {
           var road = item.road;
           var night = item.tod;
           var weather = item.weather;
-          global.totalhrs = global.totalhrs - (minutes/60);
+          global.totalhrs = global.totalhrs - Math.floor(minutes/60);
           global.totalmins = global.totalmins - (minutes%60);
           if(night == 'Night'){
             global.nighthrs -= (minutes/60);

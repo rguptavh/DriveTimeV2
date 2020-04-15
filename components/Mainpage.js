@@ -66,9 +66,12 @@ export default class Mainpage extends React.Component {
   }
 
   dashBoard = () => {
-
+    if (this.state.loading) {
+      alert("Your dashboard is loading")
+    }
+    else{
     this.props.navigation.navigate('Dashboard')
-
+    }
   }
 
 
