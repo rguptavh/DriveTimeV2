@@ -117,12 +117,13 @@ export default class Login extends React.Component {
           }
           else if (response[0] == "false") {
             alert("Failed login");
+            this.setState({ loading: false });
           }
           else {
-
             alert("Server error");
+            this.setState({ loading: false });
           }
-          this.setState({ loading: false });
+
         }
       }
     }

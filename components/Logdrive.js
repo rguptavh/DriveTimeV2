@@ -50,13 +50,24 @@ export default class Login extends React.Component {
         color: 'black',
         alignSelf: 'center',
         fontSize: 12 * ree,
-        paddingBottom: 3 * ree
+        paddingBottom: 3 * ree,
+        height: '100%',
+        width: '95%',
+        textAlign: 'center'
       },
       inputAndroid: {
         color: 'black',
         alignSelf: 'center',
         fontSize: 12 * ree,
-        paddingBottom: 3 * ree
+        paddingBottom: 3 * ree,
+        height: '100%',
+        width: '95%',
+        textAlign: 'center'
+
+      },
+      placeholder: {
+        color: 'red',
+        fontSize: 12 * ree,
       },
 
     };
@@ -285,11 +296,11 @@ export default class Login extends React.Component {
 
                 />
               </View>
-              <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ flex: 1, width: entireScreenHeight*3/4*1360/2360, }}>
                 <RNPickerSelect
                   style={pickerStyle}
-                  placeholderTextColor="red"
-
+                  //  placeholderTextColor="red"
+                  useNativeAndroidPickerStyle={false}
                   placeholder={placeholder}
                   onValueChange={(value) => this.setState({ road: value })}
                   items={[
@@ -303,11 +314,11 @@ export default class Login extends React.Component {
 
                 />
               </View>
-              <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ flex: 1,  width: entireScreenHeight*3/4*1360/2360, }}>
                 <RNPickerSelect
                   style={pickerStyle}
-                  placeholderTextColor="red"
-
+                  //  placeholderTextColor="red"
+                  useNativeAndroidPickerStyle={false}
                   placeholder={placeholder2}
                   onValueChange={(value) => this.setState({ weather: value })}
                   items={[
