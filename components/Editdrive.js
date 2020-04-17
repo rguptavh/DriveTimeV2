@@ -71,9 +71,9 @@ export default class Login extends React.Component {
       },
 
     };
-  
+
     const onPress = () => {
-      var uname = String(global.username);
+      var uname = String(global.uname);
       var date = String(this.state.date);
       var time = String(this.state.time);
       var minutes = parseInt(String(this.state.minutes));
@@ -93,7 +93,7 @@ export default class Login extends React.Component {
         if (minutes == '0') {
           alert("Can't log 0 minutes")
         }
-        else if (date == global.olddate && time == global.oldtime && minutes == global.oldminutes && description == global.olddescription && road == global.oldroad && weather == global.oldweather){
+        else if (date == global.olddate && time == global.oldtime && minutes == global.oldminutes && description == global.olddescription && road == global.oldroad && weather == global.oldweather) {
           alert("No changes made!")
         }
         else {
@@ -140,19 +140,41 @@ export default class Login extends React.Component {
 
           const Http = new XMLHttpRequest();
           const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
-          var data = "?username=" + global.uname + "&date2=" + date + "&time2=" + time + "&description2=" + description + "&tod2=" + night + "&minutes2=" + minutes + "&road2=" + road + "&weather2=" + weather + "&date=" + global.olddate + "&time=" + global.oldtime + "&description=" + global.olddescription + "&tod=" + global.oldnight +  "&minutes=" + global.oldminutes + "&road=" + global.oldroad + "&weather=" + global.oldweather + "&action=edit";
+          var data = "?username=" + uname + "&date2=" + date + "&time2=" + time + "&description2=" + description + "&tod2=" + night + "&minutes2=" + minutes + "&road2=" + road + "&weather2=" + weather + "&date=" + global.olddate + "&time=" + global.oldtime + "&description=" + global.olddescription + "&tod=" + global.oldnight + "&minutes=" + global.oldminutes + "&road=" + global.oldroad + "&weather=" + global.oldweather + "&action=edit";
           Http.open("GET", String(url + data));
+          console.log(url+data);
           Http.send();
           var ok;
           Http.onreadystatechange = (e) => {
             ok = Http.responseText;
-            
+
             if (Http.readyState == 4) {
               console.log(String(ok));
               var response = String(ok).split(",");
-              console.log(response.join(","))
+              
               if (response[0] == "Success") {
                 var data = [];
+                global.comments = response[1];
+                global.totalhrs = Math.floor(parseFloat(response[2]));
+                global.totalmins = Math.round((parseFloat(response[2]) - global.totalhrs) * 60);
+                global.day = response[3];
+                global.nighthrs = Math.floor(parseFloat(response[4]));
+                global.nightmins = Math.round((parseFloat(response[4]) - global.nighthrs) * 60);
+                global.local = parseFloat(response[5]);
+                global.highway = parseFloat(response[6]);
+                global.tollway = parseFloat(response[7]);
+                global.urban = parseFloat(response[8]);
+                global.rural = parseFloat(response[9]);
+                global.plot = parseFloat(response[10]);
+                global.sunny = parseFloat(response[11]);
+                global.rain = parseFloat(response[12]);
+                global.snow = parseFloat(response[13]);
+                global.fog = parseFloat(response[14]);
+                global.hail = parseFloat(response[15]);
+                global.sleet = parseFloat(response[16]);
+                global.frain = parseFloat(response[17]);
+                response.splice(1, 17);
+                console.log(response.toString());
                 for (var x = 0; x < (response.length - 1) / 7; x++) {
                   data.push({
                     description: response[7 * x + 1],
@@ -207,13 +229,13 @@ export default class Login extends React.Component {
               }
             }
           }
+        }
+      }
     }
-  }
-  }
     const onPress2 = () => {
       this.props.navigation.navigate('Drives')
     }
-    
+
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
         <View style={styles.container}>
@@ -294,13 +316,13 @@ export default class Login extends React.Component {
 
                 />
               </View>
-              <View style={{ flex: 1, width: entireScreenHeight*3/4*1360/2360, }}>
+              <View style={{ flex: 1, width: entireScreenHeight * 3 / 4 * 1360 / 2360, }}>
                 <RNPickerSelect
                   style={pickerStyle}
                   //  placeholderTextColor="red"
                   useNativeAndroidPickerStyle={false}
                   placeholder={placeholder}
-                  value = {this.state.road}
+                  value={this.state.road}
                   onValueChange={(value) => this.setState({ road: value })}
                   items={[
                     { label: 'Local', value: 'Local' },
@@ -313,13 +335,13 @@ export default class Login extends React.Component {
 
                 />
               </View>
-              <View style={{ flex: 1,  width: entireScreenHeight*3/4*1360/2360, }}>
+              <View style={{ flex: 1, width: entireScreenHeight * 3 / 4 * 1360 / 2360, }}>
                 <RNPickerSelect
                   style={pickerStyle}
                   //  placeholderTextColor="red"
                   useNativeAndroidPickerStyle={false}
                   placeholder={placeholder2}
-                  value = {this.state.weather}
+                  value={this.state.weather}
                   onValueChange={(value) => this.setState({ weather: value })}
                   items={[
                     { label: 'Sunny', value: 'Sunny' },
@@ -383,8 +405,8 @@ export default class Login extends React.Component {
         </View>
       </TouchableWithoutFeedback>
     );
-  
-}
+
+  }
 }
 
 const styles = StyleSheet.create({

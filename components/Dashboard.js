@@ -244,7 +244,7 @@ export default class Login extends React.Component {
             </View>
           </View>
           <View style={{ flex: 15, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-            <View style={styles.topcard}>
+            <View style={[styles.topcard, {height: '100%'}]}>
               <View style={{ flex: 1, alignItems: 'center', maxWidth: '90%' }}>
                 <Text style={{ fontSize: wid * 25, fontFamily: 'WSB', color: 'white', flex: 1, marginTop: '5%' }}>Teacher Comments: </Text>
                 <View style={{ flex: 4 }}>
@@ -260,15 +260,16 @@ export default class Login extends React.Component {
             width: '73%',
             flex: 8,
             paddingBottom: '2%',
-            paddingTop: '2%',
+            
             justifyContent: 'center',
             alignItems: 'center'
 
           }}>
             <TouchableOpacity
               style={{
-                flex: 1,
-                width: entireScreenHeight / 8 * 0.96,
+                height: '90%',
+                width: entireScreenHeight / 8 * 0.9*0.98,
+                marginTop: '2%',
               }}
               onPress={onPress}
               disabled={this.state.loading}
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topcard: {
-    height: '90%', width: '90%', backgroundColor: '#D0D0D0', borderRadius: 25, shadowColor: "#000",
+    height: '85%', width: '90%', backgroundColor: '#D0D0D0', borderRadius: 25, shadowColor: "#000",
     alignItems: 'center',
     shadowOffset: {
       width: 0,
