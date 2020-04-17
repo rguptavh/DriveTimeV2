@@ -115,20 +115,20 @@ export default class Login extends React.Component {
       <View style={styles.container}>
 
         <ImageBackground source={require('../assets/login.png')} style={styles.image}>
-          <View style={{ flex: 16, width: '100%', alignItems: 'center', marginTop: entireScreenHeight * 0.05, justifyContent: 'center' }}>
+          <View style={{ flex: 16, width: '100%', alignItems: 'center', marginTop: entireScreenHeight * 0.04, justifyContent: 'center' }}>
             <View style={styles.topcard}>
               <TouchableOpacity style={{ flex: 1, width: '100%', alignItems: 'center'}} onPress={() => {
-                Alert.alert("Detailed Drive Data", "Total Hours: " + Math.abs((global.totalhrs + global.totalmins / 60).toFixed(3)) + "\n" + "Day Hours: " + Math.abs(((global.totalhrs + global.totalmins / 60) - (global.nighthrs + global.nightmins / 60))).toFixed(3) + "\n" + "Night Hours: " + Math.abs((global.nighthrs + global.nightmins / 60)).toFixed(3) + "\n" + "Local Road Hours: " + Math.abs(global.local.toFixed(3)) + "\n" + "Highway Hours: " + Math.abs(global.highway.toFixed(3)) + "\n" + "Tollway Hours: " + Math.abs(global.tollway.toFixed(3)) + "\n" + "Urban Hours: " + Math.abs(global.urban.toFixed(3)) + "\n" + "Rural Hours: " + Math.abs(global.rural.toFixed(3)) + "\n" +
-                  "Parking Lot Hours: " + Math.abs(global.plot.toFixed(3)) + "\n" + "Sunny Hours: " + Math.abs(global.sunny.toFixed(3)) + "\n" + "Rain Hours: " + Math.abs(global.rain.toFixed(3)) + "\n" + "Snow Hours: " + Math.abs(global.snow.toFixed(3)) + "\n" + "Fog Hours: " + Math.abs(global.fog.toFixed(3)) + "\n" + "Hail Hours: " + Math.abs(global.hail.toFixed(3)) + "\n" + "Sleet Hours: " + Math.abs(global.sleet.toFixed(3)) + "\n" +
-                  "Freezing Rain Hours: " + Math.abs(global.frain.toFixed(3))
+                Alert.alert("Detailed Drive Data", "Total Hours: " + Math.abs((global.totalhrs + global.totalmins / 60)).toFixed(3) + "\n" + "Day Hours: " + Math.abs(((global.totalhrs + global.totalmins / 60) - (global.nighthrs + global.nightmins / 60))).toFixed(3) + "\n" + "Night Hours: " + Math.abs((global.nighthrs + global.nightmins / 60)).toFixed(3) + "\n" + "Local Road Hours: " + Math.abs(global.local).toFixed(3) + "\n" + "Highway Hours: " + Math.abs(global.highway).toFixed(3) + "\n" + "Tollway Hours: " + Math.abs(global.tollway).toFixed(3) + "\n" + "Urban Hours: " + Math.abs(global.urban).toFixed(3) + "\n" + "Rural Hours: " + Math.abs(global.rural).toFixed(3) + "\n" +
+                  "Parking Lot Hours: " + Math.abs(global.plot).toFixed(3) + "\n" + "Sunny Hours: " + Math.abs(global.sunny).toFixed(3) + "\n" + "Rain Hours: " + Math.abs(global.rain).toFixed(3) + "\n" + "Snow Hours: " + Math.abs(global.snow).toFixed(3) + "\n" + "Fog Hours: " + Math.abs(global.fog).toFixed(3) + "\n" + "Hail Hours: " + Math.abs(global.hail).toFixed(3) + "\n" + "Sleet Hours: " + Math.abs(global.sleet).toFixed(3) + "\n" +
+                  "Freezing Rain Hours: " + Math.abs(global.frain).toFixed(3)
                 )
               }}>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', width: '90%' }}>
                   <Text style={{ marginTop: '10%', alignItems: 'center', textAlign: 'center' }}>
                     <Text style={{ fontSize: 50 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalhrs}</Text>
-                    <Text style={{ fontSize: 25 * wid, fontFamily: 'WSR', color: 'white' }}>hours</Text>
+            <Text style={{ fontSize: 25 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalhrs == 1 ? "hour" : "hours"}</Text>
                     <Text style={{ fontSize: 50 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalmins}</Text>
-                    <Text style={{ fontSize: 25 * wid, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
+                    <Text style={{ fontSize: 25 * wid, fontFamily: 'WSR', color: 'white' }}>{global.totalmins == 1 ? "minute" : "minutes"}</Text>
                   </Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
@@ -143,9 +143,9 @@ export default class Login extends React.Component {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                   <Text style={{ marginTop: '5%' }}>
                     <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{global.nighthrs}</Text>
-                    <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>hours</Text>
+            <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>{global.nighthrs == 1 ? "hour" : "hours"}</Text>
                     <Text style={{ fontSize: wid * 40, fontFamily: 'WSR', color: 'white' }}>{global.nightmins}</Text>
-                    <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>minutes</Text>
+                    <Text style={{ fontSize: wid * 20, fontFamily: 'WSR', color: 'white' }}>{global.nightmins == 1 ? "minute" : "minutes"}</Text>
                   </Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
