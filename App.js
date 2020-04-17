@@ -9,6 +9,7 @@ import mainscr from './components/Mainpage';
 import drives from './components/Drives';
 import logdrive from './components/Logdrive';
 import dashboard from './components/Dashboard';
+import edit from './components/Editdrive';
 import moment from 'moment';
 
 import { AppLoading } from 'expo';
@@ -172,6 +173,9 @@ export default class App extends React.Component {
         },
         Dashboard: {
           screen: dashboard
+        },
+        Edit: {
+          screen: edit
         }
       },
         {

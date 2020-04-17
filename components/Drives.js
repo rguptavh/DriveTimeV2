@@ -24,6 +24,41 @@ export default class App extends React.Component {
       isSwiping: false
     };
   }
+  edit(item){
+    var temp = this.state.data;
+            for (i = 0; i < temp.length; i++) {
+              if (temp[i].id == item.id) {
+                temp.splice(i, 1);
+                break;
+              }
+            }
+            let result = [];
+            const map = new Map();
+            for (const item of temp) {
+              if (!map.has(item.date) && !item.header) {
+                map.set(item.date, true);    // set any value to Map
+                result.push(item.date);
+              }
+            }
+            for (i = 0; i < temp.length; i++) {
+              if (temp[i].header && !result.includes(temp[i].date)) {
+                temp.splice(i, 1);
+                break;
+              }
+            }
+            global.drives = temp;
+            this.setState({ data: temp });
+            global.olddate = String(item.date);
+            global.oldtime = String(item.time);
+            global.oldminutes = parseInt(String(item.minutes));
+            global.olddescription = String(item.description).trim().replace(/\n/g, " ");
+            global.oldroad = item.road;
+            global.oldnight = item.tod;
+            global.oldweather = item.weather;
+            this.props.navigation.navigate('Edit');
+
+
+  }
   deleteNote(item) {
     Alert.alert(
       "Delete Drive",
@@ -130,7 +165,7 @@ export default class App extends React.Component {
 
   _renderItem = ({ item }) => {
     const rightButtons = [
-      <TouchableHighlight style={{ backgroundColor: 'blue', height: '100%', justifyContent: 'center', }}><Text style={{ color: 'white', paddingLeft: entireScreenHeight/30 }}>Edit</Text></TouchableHighlight>,
+      <TouchableHighlight style={{ backgroundColor: 'blue', height: '100%', justifyContent: 'center', }} onPress = {() => this.edit(item)}><Text style={{ color: 'white', paddingLeft: entireScreenHeight/30 }}>Edit</Text></TouchableHighlight>,
       <TouchableHighlight style={{ backgroundColor: 'red', height: '100%', justifyContent: 'center', }} onPress ={() => this.deleteNote(item)}><Text style={{ color: 'white', paddingLeft: entireScreenHeight/50 }}>Delete</Text></TouchableHighlight>,
       
     ];
