@@ -35,7 +35,7 @@ export default class App extends React.Component {
     Http.onreadystatechange = (e) => {
       ok = String(Http.responseText);
       if (Http.readyState == 4) {
-        Linking.openURL(ok);  
+        WebBrowser.openBrowserAsync(ok); 
       }
     }
   }
