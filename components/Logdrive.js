@@ -4,6 +4,7 @@ import DatePicker from 'react-native-datepicker'
 import moment from 'moment';
 import RNPickerSelect from 'react-native-picker-select';
 import { getSunrise, getSunset } from 'sunrise-sunset-js';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default class Login extends React.Component {
@@ -219,7 +220,11 @@ export default class Login extends React.Component {
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
         <View style={styles.container}>
-
+        <Spinner
+            visible={this.state.loading}
+            textContent={'Adding Drive...'}
+            textStyle={styles.spinnerTextStyle}
+          />
           <ImageBackground source={require('../assets/login.png')} style={styles.image}>
             <View style={{ flex: 1, width: '90%', alignItems: 'center' }}>
               <Image source={require('../assets/drivelog.png')} style={{
@@ -408,6 +413,10 @@ const styles = StyleSheet.create({
     width: '80%',
     flex: 2,
 
+  },
+  spinnerTextStyle: {
+    color: '#FFF',
+    top: 60
   },
 
 });

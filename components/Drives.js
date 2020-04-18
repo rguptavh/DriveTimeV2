@@ -1,10 +1,10 @@
 import React from "react";
 import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image, Alert, TouchableHighlight, Linking } from "react-native";
 import { Text, ListItem, Left, Body, Icon, Right, Title } from "native-base";
-import Swipeout from 'react-native-swipeout';
 import moment from 'moment';
 import Swipeable from 'react-native-swipeable-row';
 import * as WebBrowser from 'expo-web-browser';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 const entireScreenHeight = Dimensions.get('window').height;
@@ -21,25 +21,27 @@ export default class App extends React.Component {
     Text.defaultProps.allowFontScaling = false;
     this.state = {
       data: global.drives,
-      stickyHeaderIndices: [],
-      isSwiping: false
+      spinner: false
     };
   }
-  export(){
+  export() {
+    this.setState({ spinner: true })
     const Http = new XMLHttpRequest();
     const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
     var data = "?username=" + global.uname + "&action=export";
-    Http.open("GET",String(url+data));
+    Http.open("GET", String(url + data));
     Http.send();
     var ok;
     Http.onreadystatechange = (e) => {
       ok = String(Http.responseText);
       if (Http.readyState == 4) {
-        WebBrowser.openBrowserAsync(ok); 
+        this.setState({ spinner: false })
+        WebBrowser.openBrowserAsync(ok);
       }
     }
   }
   edit(item) {
+
     var temp = this.state.data;
     global.drives = temp;
     this.setState({ data: temp });
@@ -231,7 +233,7 @@ export default class App extends React.Component {
                 marginTop: '10%',
                 flex: 1,
               }} resizeMode="contain"></Image>
-              </View>
+            </View>
             <View style={{ width: '100%', flex: 6, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ fontSize: 25 * wid, color: 'white', fontFamily: 'WSB' }}>Please log your first drive!</Text>
             </View>
@@ -266,6 +268,11 @@ export default class App extends React.Component {
       return (
 
         <View style={styles.container}>
+          <Spinner
+            visible={this.state.spinner}
+            textContent={'Creating Your Driving Log...'}
+            textStyle={styles.spinnerTextStyle}
+          />
           <ImageBackground source={require('../assets/login.png')} style={styles.image}>
             <View style={{ flex: 1, width: '90%', alignItems: 'center' }}>
               <Image source={require('../assets/pastdrives.png')} style={{
@@ -338,6 +345,10 @@ const styles = StyleSheet.create({
     width: '80%',
     flex: 2,
 
+  },
+  spinnerTextStyle: {
+    color: '#FFF',
+    top: 60
   },
 
 });

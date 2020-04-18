@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage } from 'react-native';
 import moment from 'moment';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 
 export default class Login extends React.Component {
@@ -65,7 +66,7 @@ export default class Login extends React.Component {
             global.frain = parseFloat(response[17]);
             response.splice(1, 17);
             console.log(response.toString());
-            
+
             for (var x = 0; x < (response.length - 1) / 7; x++) {
               data.push({
                 description: response[7 * x + 1],
@@ -131,7 +132,11 @@ export default class Login extends React.Component {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
 
         <View style={styles.container}>
-
+          <Spinner
+            visible={this.state.loading}
+            textContent={'Logging in...'}
+            textStyle={styles.spinnerTextStyle}
+          />
           <ImageBackground source={require('../assets/login.png')} style={styles.image}>
 
             <Image source={require('../assets/vh.png')} style={styles.imagefront} resizeMode="contain"></Image>
@@ -228,6 +233,10 @@ const styles = StyleSheet.create({
     width: '80%',
     flex: 2,
 
+  },
+  spinnerTextStyle: {
+    color: '#FFF',
+    top: 60
   },
 
 });
