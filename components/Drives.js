@@ -1,9 +1,10 @@
 import React from "react";
-import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image, Alert, TouchableHighlight } from "react-native";
+import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image, Alert, TouchableHighlight, Linking } from "react-native";
 import { Text, ListItem, Left, Body, Icon, Right, Title } from "native-base";
 import Swipeout from 'react-native-swipeout';
 import moment from 'moment';
 import Swipeable from 'react-native-swipeable-row';
+import * as WebBrowser from 'expo-web-browser';
 
 
 const entireScreenHeight = Dimensions.get('window').height;
@@ -23,6 +24,20 @@ export default class App extends React.Component {
       stickyHeaderIndices: [],
       isSwiping: false
     };
+  }
+  export(){
+    const Http = new XMLHttpRequest();
+    const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
+    var data = "?username=" + global.uname + "&action=export";
+    Http.open("GET",String(url+data));
+    Http.send();
+    var ok;
+    Http.onreadystatechange = (e) => {
+      ok = String(Http.responseText);
+      if (Http.readyState == 4) {
+        Linking.openURL(ok);  
+      }
+    }
   }
   edit(item) {
     var temp = this.state.data;
@@ -148,6 +163,7 @@ export default class App extends React.Component {
     const rightButtons = [
       <TouchableHighlight style={{ backgroundColor: 'blue', height: '100%', justifyContent: 'center', }} onPress={() => this.edit(item)}><Text style={{ color: 'white', paddingLeft: entireScreenHeight / 30 }}>Edit</Text></TouchableHighlight>,
       <TouchableHighlight style={{ backgroundColor: 'red', height: '100%', justifyContent: 'center', }} onPress={() => this.deleteNote(item)}><Text style={{ color: 'white', paddingLeft: entireScreenHeight / 50 }}>Delete</Text></TouchableHighlight>,
+      <TouchableHighlight style={{ backgroundColor: 'green', height: '100%', justifyContent: 'center', }} onPress={() => this.export()}><Text style={{ color: 'white', paddingLeft: entireScreenHeight / 50 }}>Export</Text></TouchableHighlight>,
 
     ];
     if (item.header) {
@@ -214,7 +230,8 @@ export default class App extends React.Component {
                 width: '84%',
                 marginTop: '10%',
                 flex: 1,
-              }} resizeMode="contain"></Image></View>
+              }} resizeMode="contain"></Image>
+              </View>
             <View style={{ width: '100%', flex: 6, justifyContent: 'center', alignItems: 'center' }}>
               <Text style={{ fontSize: 25 * wid, color: 'white', fontFamily: 'WSB' }}>Please log your first drive!</Text>
             </View>
