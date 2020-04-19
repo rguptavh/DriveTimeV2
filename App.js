@@ -133,6 +133,17 @@ export default class App extends React.Component {
                 data.splice(i, 0, he);
               }
             }
+            data.unshift({
+              description: "EXPORT",
+              tod: "EXPORT",
+              date: "EXPORT",
+              time: "EXPORT",
+              minutes: "EXPORT",
+              road: "EXPORT",
+              weather: "EXPORT",
+              id: "" + (data.length+1),
+              header: true
+            });
             global.drives = data;
             global.logging = false;
 

@@ -12,6 +12,7 @@ const rem = entireScreenHeight / 380;
 const entireScreenWidth = Dimensions.get('window').width;
 const wid = entireScreenWidth / 380;
 let first = true;
+let first2 = true;
 
 export default class App extends React.Component {
   constructor() {
@@ -57,6 +58,7 @@ export default class App extends React.Component {
 
 
   }
+
   deleteNote(item) {
     Alert.alert(
       "Delete Drive",
@@ -165,11 +167,24 @@ export default class App extends React.Component {
     const rightButtons = [
       <TouchableHighlight style={{ backgroundColor: 'blue', height: '100%', justifyContent: 'center', }} onPress={() => this.edit(item)}><Text style={{ color: 'white', paddingLeft: entireScreenHeight / 30 }}>Edit</Text></TouchableHighlight>,
       <TouchableHighlight style={{ backgroundColor: 'red', height: '100%', justifyContent: 'center', }} onPress={() => this.deleteNote(item)}><Text style={{ color: 'white', paddingLeft: entireScreenHeight / 50 }}>Delete</Text></TouchableHighlight>,
-      <TouchableHighlight style={{ backgroundColor: 'green', height: '100%', justifyContent: 'center', }} onPress={() => this.export()}><Text style={{ color: 'white', paddingLeft: entireScreenHeight / 50 }}>Export</Text></TouchableHighlight>,
-
     ];
     if (item.header) {
-
+      if (item.description == "EXPORT"){
+        return (
+          <View style={{backgroundColor: '#acb5b5', width: '100%', flex: 1}}>
+          
+        <ListItem>
+        <TouchableOpacity style = {{flex:1, width:'100%'}} onPress={() => this.export()}>
+          <Body style={{ marginRight: 0, alignItems: 'center' }}>
+            <Text style={{ fontWeight: "bold" }}>EXPORT YOUR DRIVES</Text>
+          </Body>
+          </TouchableOpacity>
+        </ListItem>
+       
+        </View>
+        );
+      }
+      else{
       return (
 
         <ListItem itemDivider>
@@ -183,6 +198,7 @@ export default class App extends React.Component {
 
 
       );
+      }
     }
     else {
       var f = false
@@ -209,7 +225,10 @@ export default class App extends React.Component {
     const onPress = () => {
       this.props.navigation.navigate('Main')
     }
-    console.log(this.state.isSwiping)
+    
+
+    
+    console.log(JSON.stringify(global.drives))
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
     const entireScreenWidth = Dimensions.get('window').width;
