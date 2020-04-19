@@ -261,7 +261,7 @@ export default class Login extends React.Component {
           />
           <ImageBackground source={require('../assets/login.png')} style={styles.image}>
             <View style={{ flex: 1, width: '90%', alignItems: 'center' }}>
-              <Image source={require('../assets/drivelog.png')} style={{
+              <Image source={require('../assets/editdrive.png')} style={{
                 height: '100%',
                 width: '84%',
                 marginTop: '10%',
