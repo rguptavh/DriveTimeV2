@@ -240,7 +240,7 @@ export default class App extends React.Component {
     else {
       ree = 1.75 * wid;
     }
-    if (global.drives.length == 0) {
+    if (global.drives.length == 1) {
       return (
 
         <View style={styles.container}>
