@@ -196,6 +196,7 @@ export default class Login extends React.Component {
                       date={this.state.date}
                       mode="date"
                       minDate={moment().add(1, 'days').format("MM-DD-YYYY")}
+                      maxDate = {moment().add(5, 'years').format("MM-DD-YYYY")}
                       format="MM-DD-YYYY"
                       confirmBtnText="Confirm"
                       cancelBtnText="Cancel"

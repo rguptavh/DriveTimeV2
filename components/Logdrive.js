@@ -226,6 +226,7 @@ export default class Login extends React.Component {
       }
     }
     const onPress2 = () => {
+      global.minutes = '';
       this.props.navigation.navigate('Main')
     }
     return (
@@ -253,11 +254,12 @@ export default class Login extends React.Component {
                 <TextInput
                   style={{ fontSize: 8 * rem, width: 200 * wid, marginTop: 20 * ree, }}
                   textAlign={'center'}
-                  onChangeText={(value) => this.setState({ description: value })}
+                  maxLength={150}
+                  onChangeText={(value) => {this.setState({ description: value })}}
                   value={this.state.description}
                   multiline={true}
                   maxHeight={8 * rem * 3.1}
-
+                  
                 />
               </View>
               <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'center' }}>
