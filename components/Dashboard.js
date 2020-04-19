@@ -103,6 +103,26 @@ export default class Login extends React.Component {
     const onPress = () => {
       this.props.navigation.navigate('Main')
     }
+    const onPress2 = async () => {
+      Alert.alert(
+        "Log Out",
+        "Are you sure you want to log out?",
+        [
+          {
+            text: "No"
+          },
+          {
+            text: "Yes", onPress: async () => {
+              await AsyncStorage.removeItem('username');
+              await AsyncStorage.removeItem('date');
+              this.props.navigation.navigate('Login')
+            }
+          }
+        ],
+        { cancelable: false }
+      );
+      
+    }
     if (entireScreenWidth >= 0.92 * entireScreenHeight * 4 / 9 * 1524 / 1200) {
       ree = rem;
     }
@@ -257,19 +277,21 @@ export default class Login extends React.Component {
             </View>
           </View>
           <View style={{
-            width: '73%',
+            width: '100%',
             flex: 8,
             paddingBottom: '2%',
-            
+            flexDirection: 'row',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
 
           }}>
+            <View style = {{flex:1, height: '100%', alignItems: 'flex-end'}}>
             <TouchableOpacity
               style={{
                 height: '90%',
                 width: entireScreenHeight / 8 * 0.9*0.98,
                 marginTop: '2%',
+                marginRight: '10%'
               }}
               onPress={onPress}
               disabled={this.state.loading}
@@ -283,6 +305,28 @@ export default class Login extends React.Component {
 
               }} resizeMode="contain"></Image>
             </TouchableOpacity>
+            </View>
+            <View style = {{flex:1, height: '100%'}}>
+            <TouchableOpacity
+              style={{
+                height: '90%',
+                width: entireScreenHeight / 8 * 0.9*0.98,
+                marginTop: '2%',
+                marginLeft: '10%'
+              }}
+              onPress={onPress2}
+              disabled={this.state.loading}
+
+            >
+              <Image source={require('../assets/logout.png')} style={{
+                height: '100%',
+                width: '100%',
+                flex: 1
+
+
+              }} resizeMode="contain"></Image>
+            </TouchableOpacity>
+            </View>
           </View>
         </ImageBackground>
       </View>
