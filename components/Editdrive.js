@@ -37,8 +37,8 @@ export default class Login extends React.Component {
     const entireScreenWidth = Dimensions.get('window').width;
     const wid = entireScreenWidth / 380;
     var ree;
-    console.log(global.uname);
-    console.log(global.minutes);
+    // console.log(global.uname);
+    // console.log(global.minutes);
 
     if (entireScreenWidth >= entireScreenHeight * 3 / 4 * 1360 / 2360 * 0.9) {
       ree = rem;
@@ -143,14 +143,14 @@ export default class Login extends React.Component {
           const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
           var data = "?username=" + uname + "&date2=" + date + "&time2=" + time + "&description2=" + description + "&tod2=" + night + "&minutes2=" + minutes + "&road2=" + road + "&weather2=" + weather + "&date=" + global.olddate + "&time=" + global.oldtime + "&description=" + global.olddescription + "&tod=" + global.oldnight + "&minutes=" + global.oldminutes + "&road=" + global.oldroad + "&weather=" + global.oldweather + "&action=edit";
           Http.open("GET", String(url + data));
-          console.log(url+data);
+          // console.log(url+data);
           Http.send();
           var ok;
           Http.onreadystatechange = (e) => {
             ok = Http.responseText;
 
             if (Http.readyState == 4) {
-              console.log(String(ok));
+              // console.log(String(ok));
               var response = String(ok).split(",");
               
               if (response[0] == "Success") {
@@ -175,7 +175,7 @@ export default class Login extends React.Component {
                 global.sleet = parseFloat(response[16]);
                 global.frain = parseFloat(response[17]);
                 response.splice(1, 17);
-                console.log(response.toString());
+                // console.log(response.toString());
                 for (var x = 0; x < (response.length - 1) / 7; x++) {
                   data.push({
                     description: response[7 * x + 1],
@@ -190,7 +190,7 @@ export default class Login extends React.Component {
                   }
                   )
                 }
-                console.log(JSON.stringify(data))
+                // console.log(JSON.stringify(data))
                 data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
                 const map = new Map();
                 let result = [];
@@ -205,7 +205,7 @@ export default class Login extends React.Component {
                 for (i = 0; i < data.length; i++) {
                   if (result.includes(data[i].date)) {
                     result.shift();
-                    console.log(result)
+                    // console.log(result)
                     const he = {
                       header: true,
                       description: 'HEADER',
@@ -232,7 +232,7 @@ export default class Login extends React.Component {
                   header: true
                 });
                 global.drives = data;
-                console.log(JSON.stringify(data))
+                // console.log(JSON.stringify(data))
                 this.props.navigation.navigate('Main')
 
               }

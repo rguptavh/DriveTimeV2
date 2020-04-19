@@ -31,10 +31,10 @@ export default class Mainpage extends React.Component {
   componentDidMount() {
     try {
      // AsyncStorage.removeItem('username');  // Clear username for testing
-      console.log(this.state.loading)
+      // console.log(this.state.loading)
       if (global.drives == null) {
         let times = setInterval(() => {
-         // console.log(global.logging)
+         // // console.log(global.logging)
           if (global.drives != null) {
             this.setState({ loading: false });
             clearInterval(this.state.times);
@@ -108,7 +108,7 @@ export default class Mainpage extends React.Component {
       deactivateKeepAwake();
       clearInterval(this.state.timer);
       global.minutes = String(parseInt(this.state.hours_Counter) * 60 + parseInt(this.state.minutes_Counter) + Math.round(parseInt(this.state.seconds_Counter) / 30));
-      console.log(global.minutes);
+      // console.log(global.minutes);
       this.props.navigation.navigate('Logdrive')
 
       this.setState({ startDisable: false })

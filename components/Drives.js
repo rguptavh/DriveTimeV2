@@ -141,7 +141,7 @@ export default class App extends React.Component {
             const Http = new XMLHttpRequest();
             const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
             var data = "?username=" + global.uname + "&date=" + date + "&time=" + time + "&description=" + description + "&tod=" + night + "&time=" + time + "&minutes=" + minutes + "&road=" + road + "&weather=" + weather + "&action=delete";
-            console.log(data);
+          //  // console.log(data);
             Http.open("GET", String(url + data));
             Http.send();
             var ok;
@@ -221,14 +221,14 @@ export default class App extends React.Component {
   };
   static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
-    console.log(global.drives)
+    //// console.log(global.drives)
     const onPress = () => {
       this.props.navigation.navigate('Main')
     }
     
 
     
-    console.log(JSON.stringify(global.drives))
+  //  // console.log(JSON.stringify(global.drives))
     const entireScreenHeight = Dimensions.get('window').height;
     const rem = entireScreenHeight / 380;
     const entireScreenWidth = Dimensions.get('window').width;

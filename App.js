@@ -13,7 +13,7 @@ import edit from './components/Editdrive';
 import moment from 'moment';
 
 import { AppLoading } from 'expo';
-
+console.disableYellowBox = true;
 let logged = false;
 export default class App extends React.Component {
   static navigationOptions = { headerShown: 'false', headerMode: 'screen', gestureEnabled: false };
@@ -33,8 +33,8 @@ export default class App extends React.Component {
     let name;
     try {
       name = await AsyncStorage.getItem('username')
-      console.log(name);
-      console.log(global.logged);
+    //  // console.log(name);
+    //  // console.log(global.logged);
 
       if (name !== null && name != 'undefined') {
         logged = true;
@@ -63,7 +63,7 @@ export default class App extends React.Component {
       Http.onreadystatechange = (e) => {
         ok = Http.responseText;
         if (Http.readyState == 4) {
-          console.log(ok);
+         // // console.log(ok);
           var response = String(ok).split(",");
           if (response[0] == 'true') {
             var data = [];
@@ -87,7 +87,7 @@ export default class App extends React.Component {
             global.sleet = parseFloat(response[16]);
             global.frain = parseFloat(response[17]);
             response.splice(1, 17);
-            console.log(response.toString());
+       //     // console.log(response.toString());
 
             for (var x = 0; x < (response.length - 1) / 7; x++) {
               data.push({
@@ -103,7 +103,7 @@ export default class App extends React.Component {
               }
               );
             }
-            console.log(JSON.stringify(data))
+         //   // console.log(JSON.stringify(data))
             data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
             const map = new Map();
             let result = [];
@@ -113,7 +113,7 @@ export default class App extends React.Component {
                 result.push(item.date);
               }
             }
-            console.log(result)
+           // // console.log(result)
             const length = data.length;
             const length2 = result.length;
             for (i = 0; i < data.length; i++) {

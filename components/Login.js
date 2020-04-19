@@ -37,9 +37,9 @@ export default class Login extends React.Component {
       Http.onreadystatechange = (e) => {
         ok = Http.responseText;
         if (Http.readyState == 4) {
-          console.log(String(ok));
+          // console.log(String(ok));
           var response = String(ok).split(",");
-          console.log(response.join(","))
+          // console.log(response.join(","))
           if (response[0] == "true") {
 
             global.uname = this.state.username;
@@ -65,7 +65,7 @@ export default class Login extends React.Component {
             global.sleet = parseFloat(response[16]);
             global.frain = parseFloat(response[17]);
             response.splice(1, 17);
-            console.log(response.toString());
+            // console.log(response.toString());
 
             for (var x = 0; x < (response.length - 1) / 7; x++) {
               data.push({
@@ -81,7 +81,7 @@ export default class Login extends React.Component {
               }
               )
             }
-            console.log(JSON.stringify(data))
+            // console.log(JSON.stringify(data))
             data = data.sort((a, b) => moment(b.date + " " + b.time, 'MM-DD-YYYY h:mm A').format('X') - moment(a.date + " " + a.time, 'MM-DD-YYYY h:mm A').format('X'))
             const map = new Map();
             let result = [];
@@ -96,7 +96,7 @@ export default class Login extends React.Component {
             for (i = 0; i < data.length; i++) {
               if (result.includes(data[i].date)) {
                 result.shift();
-                console.log(result)
+                // console.log(result)
                 const he = {
                   header: true,
                   description: 'HEADER',
@@ -123,7 +123,7 @@ export default class Login extends React.Component {
               header: true
             });
             global.drives = data;
-            console.log(JSON.stringify(data))
+            // console.log(JSON.stringify(data))
             this.setState({ loading: false });
             this.props.navigation.navigate('Main')
 
