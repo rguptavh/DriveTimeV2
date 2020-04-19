@@ -85,7 +85,7 @@ export default class App extends React.Component {
               }
             }
             for (i = 0; i < temp.length; i++) {
-              if (temp[i].header && !result.includes(temp[i].date)) {
+              if (temp[i].header && !result.includes(temp[i].date) && temp[i].description != 'EXPORT') {
                 temp.splice(i, 1);
                 break;
               }
