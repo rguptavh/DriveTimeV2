@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity, Dimensions, AsyncStorage } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
-import moment from 'moment';
+
 const entireScreenHeight = Dimensions.get('window').height;
 const rem = entireScreenHeight / 380;
 const entireScreenWidth = Dimensions.get('window').width;

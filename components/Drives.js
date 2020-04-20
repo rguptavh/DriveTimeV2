@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Fragment, Image, Alert, TouchableHighlight, Linking } from "react-native";
+import { FlatList, TouchableOpacity, ImageBackground, StyleSheet, Dimensions, View, Image, Alert, TouchableHighlight, Linking } from "react-native";
 import { Text, ListItem, Left, Body, Icon, Right, Title } from "native-base";
 import moment from 'moment';
 import Swipeable from 'react-native-swipeable-row';

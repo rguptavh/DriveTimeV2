@@ -20,10 +20,16 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/**"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rguptavh.drivetime",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.rguptavh.drivetime",
+      "versionCode": 1
     }
   }
 }

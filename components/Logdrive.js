@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Picker, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Dimensions } from 'react-native';
 import DatePicker from 'react-native-datepicker'
 import moment from 'moment';
 import RNPickerSelect from 'react-native-picker-select';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage, Text, ScrollView } from 'react-native';
 import moment from 'moment';
 import * as Progress from 'react-native-progress';
 import DatePicker from 'react-native-datepicker';
