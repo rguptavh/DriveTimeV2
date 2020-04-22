@@ -125,7 +125,7 @@ export default class Login extends React.Component {
             global.drives = data;
             // console.log(JSON.stringify(data))
             this.setState({ loading: false });
-            this.props.navigation.navigate('Main')
+            this.props.navigation.replace('Main')
 
           }
           else if (response[0] == "false") {
