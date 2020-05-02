@@ -129,8 +129,9 @@ export default class Login extends React.Component {
 
           }
           else if (response[0] == "false") {
-            alert("Failed login");
             this.setState({ loading: false });
+            alert("Failed login");
+
           }
           else {
             alert("Server error");

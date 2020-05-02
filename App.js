@@ -11,8 +11,8 @@ import logdrive from './components/Logdrive';
 import dashboard from './components/Dashboard';
 import edit from './components/Editdrive';
 import moment from 'moment';
-
 import { AppLoading } from 'expo';
+
 console.disableYellowBox = true;
 let logged = false;
 export default class App extends React.Component {
