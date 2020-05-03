@@ -130,7 +130,7 @@ export default class Login extends React.Component {
           }
           else if (response[0] == "false") {
             this.setState({ loading: false });
-            alert("Failed login");
+            setTimeout(() => {  alert("Failed login"); }, 100);
 
           }
           else {
