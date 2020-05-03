@@ -134,8 +134,8 @@ export default class Login extends React.Component {
 
           }
           else {
-            alert("Server error");
             this.setState({ loading: false });
+            setTimeout(() => {  alert("Server Error"); }, 100);
           }
 
         }
