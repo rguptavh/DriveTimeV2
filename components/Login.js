@@ -1,16 +1,31 @@
 import * as React from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage, Button  } from 'react-native';
 import moment from 'moment';
 import Spinner from 'react-native-loading-spinner-overlay';
+import * as firebase from "firebase";
 
 
 export default class Login extends React.Component {
   state = {
     username: '',
     password: '',
-    loading: false
+    loading: false,
+    errorMessage: null
+  };
+  handleLogin = () => {
+    setTimeout(() => {  alert("Shabbat"); }, 100);
+    const { username, password } = this.state;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(username, password)
+      .then(() => {
+        // AsyncStorage.setItem("key", "I like to save it.");
+        this.props.navigation.replace("Main");
+      })
+      .catch(error => this.setState({ errorMessage: error.message }));
   };
 
+  
   static navigationOptions = { headerMode: 'none', gestureEnabled: false };
   render() {
     const entireScreenHeight = Dimensions.get('window').height;
@@ -25,7 +40,8 @@ export default class Login extends React.Component {
       ree = 1.75 * wid;
     }
     const onPress = () => {
-      var uname = this.state.username;
+      this.handleLogin();
+      /* var uname = this.state.username;
       var pword = this.state.password;
       this.setState({ loading: true });
       const Http = new XMLHttpRequest();
@@ -139,7 +155,7 @@ export default class Login extends React.Component {
           }
 
         }
-      }
+      } */
     }
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
@@ -190,6 +206,10 @@ export default class Login extends React.Component {
                   value={this.state.password}
                   secureTextEntry={true}
                 />
+                <Button
+          title="Don't have an account? Sign Up"
+          onPress={() => this.props.navigation.replace("SignUp")}
+        />
 
               </View>
             </ImageBackground>
