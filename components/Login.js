@@ -8,6 +8,8 @@ const entireScreenHeight = Dimensions.get('window').height;
 const rem = entireScreenHeight / 380;
 const entireScreenWidth = Dimensions.get('window').width;
 const wid = entireScreenWidth / 380;
+
+
 export default class Login extends React.Component {
   state = {
     username: '',
@@ -25,11 +27,10 @@ export default class Login extends React.Component {
       if (result.type === "success") {
       //  console.log("LoginScreen.js.js 21 | ", result.user.givenName);
          //after Google login redirect to Profile
-        this.state.username  = result.user.givenName + " " + result.user.familyName;
-        if(result.user.email.includes("@vhhscougars.org") || (result.user.email).includes("@d128.org"))
+        uname  = result.user.givenName + " " + result.user.familyName;
+        if(result.user.email.includes("@vhhscougars.org") || (result.user.email).includes("@d128.org") || (result.user.email).includes("@lhswildcats.org"))
         {
-        global.uname = this.state.username;
-        var uname = global.uname;
+        global.uname = uname;
       this.setState({ loading: true });
       const Http = new XMLHttpRequest();
       const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
@@ -137,10 +138,7 @@ export default class Login extends React.Component {
   
         }
       } 
-      this.props.navigation.replace("Main", {
-        username:result.user.givenName
-        
-      });
+     // this.props.navigation.replace("Main", {username:result.user.givenName});
 
     }
     else{
