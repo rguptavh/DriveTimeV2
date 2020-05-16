@@ -10,14 +10,10 @@ import drives from './components/Drives';
 import logdrive from './components/Logdrive';
 import dashboard from './components/Dashboard';
 import edit from './components/Editdrive';
-import sign from './components/SignUp';
-
 import moment from 'moment';
 import { AppLoading } from 'expo';
-import * as firebase from "firebase";
-console.disableYellowBox = true;
-let logged = false;
 
+import * as firebase from 'firebase';
 var firebaseConfig = {
   apiKey: "AIzaSyA6jm4u7jyD9ofrKr4D6HzElN27FKkHiUA",
   authDomain: "drivetime-ce314.firebaseapp.com",
@@ -29,6 +25,9 @@ var firebaseConfig = {
   measurementId: "G-ZGWS3MZ6WJ"
 };
 firebase.initializeApp(firebaseConfig);
+
+console.disableYellowBox = true;
+let logged = false;
 export default class App extends React.Component {
   static navigationOptions = { headerShown: 'false', headerMode: 'screen', gestureEnabled: false };
   state = {
@@ -186,9 +185,6 @@ export default class App extends React.Component {
       const AppNavigator = createStackNavigator({
         Login: {
           screen: log
-        },
-        SignUp: {
-          screen: sign
         },
         Main: {
           screen: mainscr

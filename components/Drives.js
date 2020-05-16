@@ -35,6 +35,7 @@ export default class App extends React.Component {
     var ok;
     Http.onreadystatechange = (e) => {
       ok = String(Http.responseText);
+
       if (Http.readyState == 4) {
         this.setState({ spinner: false })
         WebBrowser.openBrowserAsync(ok);
