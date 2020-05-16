@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage, Text } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage, Text, KeyboardAvoidingView } from 'react-native';
 import moment from 'moment';
 import Spinner from 'react-native-loading-spinner-overlay';
 import firebase from 'firebase';
@@ -284,6 +284,8 @@ export default class Login extends React.Component {
      
     
     return (
+      <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"} style={styles.container}>
+
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
 
         <View style={styles.container}>
@@ -388,6 +390,7 @@ export default class Login extends React.Component {
           </ImageBackground>
         </View>
       </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -398,7 +401,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     justifyContent: 'center',
     alignItems: 'center',
-    left: 0, top: 0, position: 'absolute'
+
 
   },
   image: {
