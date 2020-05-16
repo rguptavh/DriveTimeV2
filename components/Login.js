@@ -23,13 +23,11 @@ export default class Login extends React.Component {
       });
 
       if (result.type === "success") {
-        console.log('done')
       //  console.log("LoginScreen.js.js 21 | ", result.user.givenName);
-        this.props.navigation.replace("Main", {
-          username:result.user.givenName
-          
-        }); //after Google login redirect to Profile
+         //after Google login redirect to Profile
         this.state.username  = result.user.givenName + " " + result.user.familyName;
+        if(result.user.email.includes("@vhhscougars.org") || (result.user.email).includes("@d128.org"))
+        {
         global.uname = this.state.username;
         var uname = global.uname;
       this.setState({ loading: true });
@@ -139,7 +137,16 @@ export default class Login extends React.Component {
   
         }
       } 
+      this.props.navigation.replace("Main", {
+        username:result.user.givenName
+        
+      });
 
+    }
+    else{
+      setTimeout(() => {  alert("Please use a school issued account"); }, 100);
+
+    }
         return result.accessToken;
       } else {
         return { cancelled: true };
