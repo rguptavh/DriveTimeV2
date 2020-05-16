@@ -6,10 +6,6 @@ import DatePicker from 'react-native-datepicker';
 import { NavigationActions, StackActions } from 'react-navigation'
 
 
-
-
-
-
 export default class Login extends React.Component {
   state = {
     license: '',
@@ -114,14 +110,9 @@ export default class Login extends React.Component {
           },
           {
             text: "Yes", onPress: async () => {
-              await AsyncStorage.removeItem('username');
-              await AsyncStorage.removeItem('date');
-              const resetAction = StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({routeName: 'Login'})],
-                key: null,
-              });
-              this.props.navigation.dispatch(resetAction);
+              AsyncStorage.clear();
+              //await AsyncStorage.removeItem('date');
+              this.props.navigation.replace('Login')
             }
           }
         ],

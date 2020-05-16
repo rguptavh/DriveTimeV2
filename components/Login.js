@@ -2,7 +2,8 @@ import * as React from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Image, ImageBackground, TouchableOpacity, Alert, Dimensions, AsyncStorage } from 'react-native';
 import moment from 'moment';
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import firebase from 'firebase';
+import * as Google from "expo-google-app-auth";
 
 export default class Login extends React.Component {
   state = {
@@ -10,27 +11,27 @@ export default class Login extends React.Component {
     password: '',
     loading: false
   };
+  signInWithGoogle = async () => {
 
-  static navigationOptions = { headerMode: 'none', gestureEnabled: false };
-  render() {
-    const entireScreenHeight = Dimensions.get('window').height;
-    const rem = entireScreenHeight / 380;
-    const entireScreenWidth = Dimensions.get('window').width;
-    const wid = entireScreenWidth / 380;
-    var ree;
-    if (entireScreenWidth >= 0.92 * entireScreenHeight * 4 / 9 * 1524 / 1200) {
-      ree = rem;
-    }
-    else {
-      ree = 1.75 * wid;
-    }
-    const onPress = () => {
-      var uname = this.state.username;
-      var pword = this.state.password;
+      const result = await Google.logInAsync({
+        iosClientId: "400546646665-8en50d9jelhlcijqkkes4euo0ekhhguh.apps.googleusercontent.com",
+        androidClientId: "400546646665-5cm0tfjdfuejb8r0gncvlr0kg8pfn2m3.apps.googleusercontent.com",
+        scopes: ["profile", "email"]
+      });
+
+      if (result.type === "success") {
+      //  console.log("LoginScreen.js.js 21 | ", result.user.givenName);
+        this.props.navigation.replace("Main", {
+          username:result.user.givenName
+          
+        }); //after Google login redirect to Profile
+        this.state.username  = result.user.givenName + " " + result.user.familyName;
+        global.uname = this.state.username;
+        var uname = global.uname;
       this.setState({ loading: true });
       const Http = new XMLHttpRequest();
       const url = 'https://script.google.com/macros/s/AKfycbz21dke8ZWXExmF9VTkN0_3ITaceg-3Yg-i17lO31wtCC_0n00/exec';
-      var data = "?username=" + uname + "&password=" + pword + "&action=login";
+      var data = "?username=" + global.uname  + "&action=login";
       Http.open("GET", String(url + data));
       Http.send();
       var ok;
@@ -39,11 +40,10 @@ export default class Login extends React.Component {
         if (Http.readyState == 4) {
           // console.log(String(ok));
           var response = String(ok).split(",");
-          // console.log(response.join(","))
-          if (response[0] == "true") {
-
-            global.uname = this.state.username;
-            AsyncStorage.setItem('username', this.state.username);
+          if (response[0] == "false") {
+            
+            //global.uname = this.state.username;
+            AsyncStorage.setItem('username', global.uname);
             var data = [];
             global.comments = response[1];
             global.totalhrs = Math.floor(parseFloat(response[2]));
@@ -66,7 +66,7 @@ export default class Login extends React.Component {
             global.frain = parseFloat(response[17]);
             response.splice(1, 17);
             // console.log(response.toString());
-
+  
             for (var x = 0; x < (response.length - 1) / 7; x++) {
               data.push({
                 description: response[7 * x + 1],
@@ -126,21 +126,43 @@ export default class Login extends React.Component {
             // console.log(JSON.stringify(data))
             this.setState({ loading: false });
             this.props.navigation.replace('Main')
-
-          }
-          else if (response[0] == "false") {
-            this.setState({ loading: false });
-            setTimeout(() => {  alert("Failed login"); }, 100);
-
+  
           }
           else {
             this.setState({ loading: false });
-            setTimeout(() => {  alert("Server Error"); }, 100);
+            setTimeout(() => {  alert(response); }, 100);
           }
-
+  
         }
+      } 
+
+        return result.accessToken;
+      } else {
+        return { cancelled: true };
       }
+
+  };
+  
+  static navigationOptions = { headerMode: 'none', gestureEnabled: false };
+  render() {
+    const entireScreenHeight = Dimensions.get('window').height;
+    const rem = entireScreenHeight / 380;
+    const entireScreenWidth = Dimensions.get('window').width;
+    const wid = entireScreenWidth / 380;
+    var ree;
+    if (entireScreenWidth >= 0.92 * entireScreenHeight * 4 / 9 * 1524 / 1200) {
+      ree = rem;
     }
+    else {
+      ree = 1.75 * wid;
+    }
+    const onPress = () => {
+      this.signInWithGoogle();
+      
+    }
+
+     
+    
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
 
@@ -158,41 +180,7 @@ export default class Login extends React.Component {
               width: '74%',
               flex: 1,
             }} resizeMode="contain"></Image>
-            <ImageBackground source={require('../assets/form.png')} style={{
-              alignItems: 'center',
-              flex: 4,
-              width: '100%',
 
-            }} resizeMode="contain">
-              <View style={{
-                width: 200 * wid,
-                flex: 1,
-                justifyContent: 'flex-end'
-              }}>
-                <TextInput
-                  style={{ fontSize: 12 * rem, width: 200 * wid, marginBottom: 24 * ree, }}
-                  textAlign={'center'}
-                  autoCapitalize='none'
-                  autoCompleteType='off'
-                  onChangeText={(value) => this.setState({ username: value })}
-                  value={this.state.username}
-
-                /></View>
-              <View style={{
-                width: 200 * wid,
-                flex: 1,
-
-              }}>
-                <TextInput
-                  style={{ fontSize: 12 * rem, width: 200 * wid, marginTop: ree * 37 }}
-                  textAlign={'center'}
-                  onChangeText={(value) => this.setState({ password: value })}
-                  value={this.state.password}
-                  secureTextEntry={true}
-                />
-
-              </View>
-            </ImageBackground>
             <View style={{
               width: '73%',
               flex: 2,

@@ -14,7 +14,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
+      "resizeMode": "cover"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -25,7 +25,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.rguptavh.drivetime",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.0",
+      "config":{
+        "googleSignIn":{
+          "reserveClientId":"com.googleusercontent.apps.400546646665-8en50d9jelhlcijqkkes4euo0ekhhguh"
+        }
+      }
     },
     "android": {
       "package": "com.rguptavh.drivetime",

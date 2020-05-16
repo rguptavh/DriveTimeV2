@@ -13,6 +13,19 @@ import edit from './components/Editdrive';
 import moment from 'moment';
 import { AppLoading } from 'expo';
 
+import * as firebase from 'firebase';
+var firebaseConfig = {
+  apiKey: "AIzaSyA6jm4u7jyD9ofrKr4D6HzElN27FKkHiUA",
+  authDomain: "drivetime-ce314.firebaseapp.com",
+  databaseURL: "https://drivetime-ce314.firebaseio.com",
+  projectId: "drivetime-ce314",
+  storageBucket: "drivetime-ce314.appspot.com",
+  messagingSenderId: "124667229118",
+  appId: "1:124667229118:web:97be36df1399fa418fffef",
+  measurementId: "G-ZGWS3MZ6WJ"
+};
+firebase.initializeApp(firebaseConfig);
+
 console.disableYellowBox = true;
 let logged = false;
 export default class App extends React.Component {
