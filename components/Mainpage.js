@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet, Image, ImageBackground, TouchableOpacity, Dimensions, AsyncStorage } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const entireScreenHeight = Dimensions.get('window').height;
 const rem = entireScreenHeight / 380;
@@ -131,7 +132,15 @@ export default class Mainpage extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <ImageBackground source={require('../assets/login.png')} style={styles.image}>
+          <LinearGradient
+              // Background Linear Gradient
+              colors={['#64ABFF', '#ADAFB0']}
+              style={{
+                flex:1,
+                width:'100%',
+                alignItems:'center'
+              }}
+            >
           <View style={{
             width: '85%',
             flex: 2,
@@ -231,7 +240,7 @@ export default class Mainpage extends React.Component {
               }} resizeMode="contain"></Image>
             </TouchableOpacity>
           </View>
-        </ImageBackground>
+        </LinearGradient>
 
       </View>
 
